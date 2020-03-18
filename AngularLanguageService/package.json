@@ -1,0 +1,20 @@
+{
+  "name": "angularls",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/language-server": "^0.900.14",
+    "@types/node": "^13.7.1",
+    "typescript": "^3.8.2",
+    "vscode-jsonrpc": "^5.0.1"
+  }
+}
