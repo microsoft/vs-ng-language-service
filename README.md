@@ -1,3 +1,17 @@
+# Angular Language Service for Visual Studio
+
+This is an extension to Visual Studio to provide IntelliSense for Angular templates.
+
+# Build
+
+Install npm packages for typescript and the angular language service plugin, and run msbuild:
+
+```
+cd AngularLanguageService
+npm install
+cd ..
+msbuild AngularLanguageService.sln
+```
 
 # Contributing
 
