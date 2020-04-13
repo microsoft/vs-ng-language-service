@@ -4,13 +4,16 @@ This is an extension to Visual Studio to provide IntelliSense for Angular templa
 
 # Build
 
-Install npm packages for typescript and the angular language service plugin, and run msbuild:
+Prerequisites:
+- NuGet - [Direct Installation Link](https://dist.nuget.org/win-x86-commandline/latest/nuget.exe)
+- Visual Studio 2019 with the "Visual Studio extension development" workload selected
+- npm
+
+Open a Developer Command Prompt for your Visual Studio install (note that there is a Developer Command Prompt for each of your Visual Studio installations). You can find it by searching the start menu. Install the NuGet packages for the solution and run msbuild (npm packages for typescript and the angular language service plugin will be installed automatically):
 
 ```
-cd AngularLanguageService
-npm install
-cd ..
-msbuild AngularLanguageService.sln
+> nuget restore
+> msbuild AngularLanguageService.sln
 ```
 
 # Contributing
