@@ -1,8 +1,28 @@
 # Angular Language Service for Visual Studio
 
-This is an extension to Visual Studio to provide IntelliSense for Angular templates.
+This is an extension made to bring in the Angular Language Service to Angular templates being created in Visual Studio
 
-# Build
+**Minimum version of Visual Studio Needed:** 16.5.0
+
+
+## Features
+
+- Completions List
+- AOT Diagnostic messages
+- Quick Info
+
+**Coming Soon:** Go to Definition
+
+## Usage
+
+Download the Extension from the Visual Studio Marketplace.
+
+Restart Visual Studio.
+
+When you open a .ts or html Angular file you should see the following Output Window:
+
+
+# Local Build
 
 Prerequisites:
 - NuGet - [Direct Installation Link](https://dist.nuget.org/win-x86-commandline/latest/nuget.exe)
