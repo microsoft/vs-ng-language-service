@@ -1,4 +1,7 @@
-﻿using EnvDTE;
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+using EnvDTE;
 using Microsoft.VisualStudio.LanguageServer.Client;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Threading;
