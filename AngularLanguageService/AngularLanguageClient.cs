@@ -112,7 +112,7 @@ namespace AngularLanguageService
                         }
                         else
                         {
-                            var content = readContent.Buffer.ToArray();
+                            var content = BuffersExtensions.ToArray(readContent.Buffer);
                             outputPane.WriteAsync($"[Client -> Server] {Encoding.UTF8.GetString(content)}").Forget();
                             inputPipe.Reader.AdvanceTo(readContent.Buffer.End);
                             await input.WriteAsync(Encoding.UTF8.GetString(content).ToCharArray());
