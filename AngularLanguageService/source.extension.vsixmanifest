@@ -4,6 +4,7 @@
         <Identity Id="AngularLS.334c72b9-3c91-4d88-a267-c2df733b0a82" Version="1.0" Language="en-US" Publisher="Microsoft" />
         <DisplayName>Angular Language Service</DisplayName>
         <Description xml:space="preserve">Provides the Angular language service to enable editor features for Angular templates.</Description>
+        <License>EULA.rtf</License>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 17.0)" />
