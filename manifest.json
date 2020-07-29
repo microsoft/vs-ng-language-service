@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json.schemastore.org/vsix-publish",
+    "categories": [ "coding" ],
+    "identity": {
+        "internalName": "Angular Language Service" // If not specified, we try to generate the name from the display name of the extension in the vsixmanifest file.
+                                            // Required if the display name is not the actual name of the extension.
+    },
+    "overview": "README.md",            // Path to the "readme" file that gets uploaded to the Marketplace. Required.
+    "priceCategory": "free",              // Either "free", "trial", or "paid". Defaults to "free".
+    "publisher": "TypeScriptTeam",       // The name of the publisher. Required.
+    "private": true,                     // Specifies whether or not the extension should be public when uploaded. Defaults to false.
+    "qna": true,                          // Specifies whether or not the extension should have a Q&A section. Defaults to true.
+    "repo": "https://github.com/microsoft/vs-ng-language-service" // Not required.
+}
