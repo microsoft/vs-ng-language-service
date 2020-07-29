@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="AngularLS.334c72b9-3c91-4d88-a267-c2df733b0a82" Version="1.0" Language="en-US" Publisher="Microsoft" />
+        <Identity Id="AngularLS.334c72b9-3c91-4d88-a267-c2df733b0a82" Version="1.0" Language="en-US" Publisher="TypeScript Team" />
         <DisplayName>Angular Language Service</DisplayName>
         <Description xml:space="preserve">Provides the Angular language service to enable editor features for Angular templates.</Description>
         <License>EULA.rtf</License>
