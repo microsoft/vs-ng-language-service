@@ -4,15 +4,6 @@
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>FinalPublicKey.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <DelaySign>true</DelaySign>
-  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,13 +44,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AngularLanguageClient.cs" />
-    <Compile Include="AngularLanguageServiceOutputPane.cs" />
-    <Compile Include="AngularTemplateContentDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FinalPublicKey.snk" />
     <Content Include="EULA.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -69,9 +56,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client">
-      <Version>16.5.1063</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.0.204" ExcludeAssets="runtime">
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -89,12 +73,15 @@
     <FilesToSign Include="$(OutDir)\AngularLanguageService.vsix">
       <Authenticode>VsixSHA2</Authenticode>
     </FilesToSign>
-    <FilesToSign Include="$(OutDir)\AngularLanguageService.dll">
-      <Authenticode>Microsoft400</Authenticode>
-      <StrongName>StrongName</StrongName>
-    </FilesToSign>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AngularLanguageServiceLib\AngularLanguageServiceLib.csproj">
+      <Project>{89C23DE4-E653-43FE-BFD3-FE15CFDA2E54}</Project>
+      <Name>AngularLanguageServiceLib</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <Target Name="BeforeBuild">
