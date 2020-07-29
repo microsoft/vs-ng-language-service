@@ -14,7 +14,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AngularLanguageServiceVsix</RootNamespace>
-    <AssemblyName>AngularLanguageServiceVsix</AssemblyName>
+    <AssemblyName>AngularLanguageService</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
@@ -70,7 +70,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <FilesToSign Include="$(OutDir)\AngularLanguageServiceVsix.vsix">
+    <FilesToSign Include="$(OutDir)\AngularLanguageService.vsix">
       <Authenticode>VsixSHA2</Authenticode>
     </FilesToSign>
   </ItemGroup>
