@@ -9,8 +9,8 @@
     <ProjectGuid>{89C23DE4-E653-43FE-BFD3-FE15CFDA2E54}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AngularLanguageServiceLib</RootNamespace>
-    <AssemblyName>AngularLanguageServiceLib</AssemblyName>
+    <RootNamespace>AngularLanguageService</RootNamespace>
+    <AssemblyName>AngularLanguageService</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -523,7 +523,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-      <FilesToSign Include="$(OutDir)\AngularLanguageServiceLib.dll">
+    <FilesToSign Include="$(OutDir)\AngularLanguageService.dll">
       <Authenticode>Microsoft400</Authenticode>
       <StrongName>StrongName</StrongName>
     </FilesToSign>
