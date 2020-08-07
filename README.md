@@ -6,6 +6,8 @@ This is an extension made to bring in the Angular Language Service to Angular te
 
 **Minimum version of Visual Studio Needed:** 16.5.0
 
+Download the extension [here](https://marketplace.visualstudio.com/items?itemName=TypeScriptTeam.AngularLanguageService&ssr=false#review-details)
+
 
 ## Features
 
