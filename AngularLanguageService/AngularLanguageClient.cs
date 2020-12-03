@@ -164,9 +164,9 @@ namespace AngularLanguageService
 
             public async Task<JToken> HandleRequestAsync(string methodName, JToken methodParam, Func<JToken, Task<JToken>> sendRequest)
             {
-                await parent.outputPane.WriteAsync($"[Client -> Server][Middle Layer] {methodParam}");
+                await parent.outputPane.WriteAsync($"[Client -> Server][Middle Layer] {methodParam ?? "null"}");
                 var result = await sendRequest(methodParam);
-                await parent.outputPane.WriteAsync($"[Client <- Server][Middle Layer] {result}");
+                await parent.outputPane.WriteAsync($"[Client <- Server][Middle Layer] {result ?? "null"}");
                 return result;
             }
         }
