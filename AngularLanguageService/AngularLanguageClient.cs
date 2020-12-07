@@ -1,14 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-using EnvDTE;
-using Microsoft.VisualStudio.LanguageServer.Client;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Threading;
-using Microsoft.VisualStudio.Utilities;
-using Nerdbank.Streams;
-using Newtonsoft.Json.Linq;
-using StreamJsonRpc;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
@@ -16,11 +8,17 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipelines;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.LanguageServer.Client;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Threading;
+using Microsoft.VisualStudio.Utilities;
+using Newtonsoft.Json.Linq;
+using StreamJsonRpc;
+using Task = System.Threading.Tasks.Task;
 
 namespace AngularLanguageService
 {
@@ -29,6 +27,8 @@ namespace AngularLanguageService
     [Export(typeof(ILanguageClient))]
     public class AngularLanguageClient : ILanguageClient, ILanguageClientCustomMessage2
     {
+        private readonly AngularLanguageServiceOutputPane outputPane;
+
         public string Name => "Angular Language Service Extension";
 
         public IEnumerable<string> ConfigurationSections => null;
@@ -40,16 +40,15 @@ namespace AngularLanguageService
         public event AsyncEventHandler<EventArgs> StartAsync;
         public event AsyncEventHandler<EventArgs> StopAsync;
 
-        [Import]
-        private AngularLanguageServiceOutputPane outputPane { get; set; }
-
         public object MiddleLayer { get; }
 
         public object CustomMessageTarget => null;
 
-        public AngularLanguageClient()
+        [ImportingConstructor]
+        public AngularLanguageClient(AngularLanguageServiceOutputPane outputPane)
         {
-             MiddleLayer = new MiddleLayerProvider(this);
+            MiddleLayer = new MiddleLayerProvider(this);
+            this.outputPane = outputPane;
         }
 
         public async Task<Connection> ActivateAsync(CancellationToken token)
@@ -58,9 +57,9 @@ namespace AngularLanguageService
 
             ProcessStartInfo info = new ProcessStartInfo();
             info.FileName = "node.exe";
-            info.Arguments = 
+            info.Arguments =
                 "" // " --inspect=9242"
-                + " \"" + Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "node_modules\\@angular\\language-server\\index.js") + "\"" 
+                + " \"" + Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "node_modules\\@angular\\language-server\\index.js") + "\""
                 // + " --logFile c:\\temp\\angularlsscript.txt"
                 + " --logVerbosity verbose"
                 + " --tsProbeLocations " + "\"" + Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "node_modules") + "\""
@@ -71,8 +70,8 @@ namespace AngularLanguageService
             info.RedirectStandardError = true;
             info.UseShellExecute = false;
             info.CreateNoWindow = true;
-            
-            var process = new System.Diagnostics.Process();
+
+            var process = new Process();
             process.StartInfo = info;
             process.ErrorDataReceived += (obj, data) => { outputPane.WriteAsync($"Error from node process: {data.Data}").Forget(); };
 
@@ -84,66 +83,58 @@ namespace AngularLanguageService
                 {
                     var inputPipe = new Pipe();
                     var input = process.StandardInput;
-                    ForwardInput(inputPipe, input).Forget();
+                    ForwardInputAsync(inputPipe, input).Forget();
 
                     return new Connection(process.StandardOutput.BaseStream, inputPipe.Writer.AsStream());
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                ;
+                // swallow exception
             }
 
             return null;
         }
 
-        private System.Threading.Tasks.Task ForwardInput(Pipe inputPipe, StreamWriter input)
+        private async Task ForwardInputAsync(Pipe inputPipe, StreamWriter input)
         {
-            return System.Threading.Tasks.Task.Run(async () =>
+            await Task.Yield();
+
+            while (true)
             {
-                try
+                var readContent = await inputPipe.Reader.ReadAsync();
+                if (readContent.Buffer.Length == 0)
                 {
-                    while (true)
-                    {
-                        var readContent = await inputPipe.Reader.ReadAsync();
-                        if (readContent.Buffer.Length == 0)
-                        {
-                            await System.Threading.Tasks.Task.Delay(100);
-                        }
-                        else
-                        {
-                            var content = BuffersExtensions.ToArray(readContent.Buffer);
-                            outputPane.WriteAsync($"[Client -> Server] {Encoding.UTF8.GetString(content)}").Forget();
-                            inputPipe.Reader.AdvanceTo(readContent.Buffer.End);
-                            await input.WriteAsync(Encoding.UTF8.GetString(content).ToCharArray());
-                        }
-                    }
+                    await Task.Delay(100);
                 }
-                catch (Exception e)
+                else
                 {
-                    throw;
+                    var content = BuffersExtensions.ToArray(readContent.Buffer);
+                    outputPane.WriteAsync($"[Client -> Server] {Encoding.UTF8.GetString(content)}").Forget();
+                    inputPipe.Reader.AdvanceTo(readContent.Buffer.End);
+                    await input.WriteAsync(Encoding.UTF8.GetString(content).ToCharArray());
                 }
-            });
+            }
         }
 
-        public async System.Threading.Tasks.Task OnLoadedAsync()
+        public async Task OnLoadedAsync()
         {
             await StartAsync.InvokeAsync(this, EventArgs.Empty).ConfigureAwait(false);
         }
 
-        public System.Threading.Tasks.Task OnServerInitializeFailedAsync(Exception e)
+        public Task OnServerInitializeFailedAsync(Exception e)
         {
-            return System.Threading.Tasks.Task.CompletedTask;
+            return Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task OnServerInitializedAsync()
+        public Task OnServerInitializedAsync()
         {
-            return System.Threading.Tasks.Task.CompletedTask;
+            return Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task AttachForCustomMessageAsync(JsonRpc rpc)
+        public Task AttachForCustomMessageAsync(JsonRpc rpc)
         {
-            return System.Threading.Tasks.Task.CompletedTask;
+            return Task.CompletedTask;
         }
 
         private class MiddleLayerProvider : ILanguageClientMiddleLayer
@@ -166,16 +157,16 @@ namespace AngularLanguageService
                 }
             }
 
-            public System.Threading.Tasks.Task HandleNotificationAsync(string methodName, JToken methodParam, Func<JToken, System.Threading.Tasks.Task> sendNotification)
+            public Task HandleNotificationAsync(string methodName, JToken methodParam, Func<JToken, Task> sendNotification)
             {
                 return sendNotification(methodParam);
             }
 
             public async Task<JToken> HandleRequestAsync(string methodName, JToken methodParam, Func<JToken, Task<JToken>> sendRequest)
             {
-                await parent.outputPane.WriteAsync($"[Client -> Server][Middle Layer] {methodParam.ToString()}");
+                await parent.outputPane.WriteAsync($"[Client -> Server][Middle Layer] {methodParam ?? "null"}");
                 var result = await sendRequest(methodParam);
-                await parent.outputPane.WriteAsync($"[Client <- Server][Middle Layer] {result.ToString()}");
+                await parent.outputPane.WriteAsync($"[Client <- Server][Middle Layer] {result ?? "null"}");
                 return result;
             }
         }
