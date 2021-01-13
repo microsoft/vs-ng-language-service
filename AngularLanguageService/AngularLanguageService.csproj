@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.VSSDK.BuildTools.16.0.139\build\Microsoft.VSSDK.BuildTools.props" Condition="Exists('..\packages\Microsoft.VSSDK.BuildTools.16.0.139\build\Microsoft.VSSDK.BuildTools.props')" />
   <Import Project="..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.2.9.4\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.2.9.4\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props')" />
   <Import Project="..\packages\VS.ExternalApis.WebTools.References.16.8.557\build\VS.ExternalApis.WebTools.References.props" Condition="Exists('..\packages\VS.ExternalApis.WebTools.References.16.8.557\build\VS.ExternalApis.WebTools.References.props')" />
   <Import Project="..\packages\Microsoft.VisualStudioEng.MicroBuild.Core.0.4.1\build\Microsoft.VisualStudioEng.MicroBuild.Core.props" Condition="Exists('..\packages\Microsoft.VisualStudioEng.MicroBuild.Core.0.4.1\build\Microsoft.VisualStudioEng.MicroBuild.Core.props')" />
@@ -74,6 +75,12 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceHub.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ServiceHub.Framework.2.1.20\lib\netstandard2.0\Microsoft.ServiceHub.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.CommandBars, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <HintPath>..\packages\Microsoft.VisualStudio.CommandBars.8.0.0.1\lib\net10\Microsoft.VisualStudio.CommandBars.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -82,7 +89,7 @@
       <HintPath>..\packages\Microsoft.VisualStudio.ComponentModelHost.16.0.467\lib\net46\Microsoft.VisualStudio.ComponentModelHost.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.CoreUtility.16.0.467\lib\net472\Microsoft.VisualStudio.CoreUtility.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.CoreUtility.16.4.269\lib\net472\Microsoft.VisualStudio.CoreUtility.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Debugger.Interop.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Debugger.Interop.10.0.10.0.30320\lib\net20\Microsoft.VisualStudio.Debugger.Interop.10.0.dll</HintPath>
@@ -111,27 +118,26 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Editor, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Editor.16.0.467\lib\net472\Microsoft.VisualStudio.Editor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Editor.16.4.269\lib\net472\Microsoft.VisualStudio.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.ImageCatalog, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.ImageCatalog.16.0.28727\lib\net45\Microsoft.VisualStudio.ImageCatalog.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.ImageCatalog.16.4.29416.172\lib\net45\Microsoft.VisualStudio.ImageCatalog.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Imaging, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Imaging.16.0.28729\lib\net45\Microsoft.VisualStudio.Imaging.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Imaging.16.4.29416.172\lib\net472\Microsoft.VisualStudio.Imaging.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime.14.3.26930\lib\net20\Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime.16.7.30126.35\lib\net45\Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Language, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Language.16.0.467\lib\net472\Microsoft.VisualStudio.Language.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Language.16.4.269\lib\net472\Microsoft.VisualStudio.Language.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Language.Intellisense, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Language.Intellisense.16.0.467\lib\net472\Microsoft.VisualStudio.Language.Intellisense.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Language.Intellisense.16.4.269\lib\net472\Microsoft.VisualStudio.Language.Intellisense.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Language.NavigateTo.Interfaces, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Language.NavigateTo.Interfaces.16.0.467\lib\net472\Microsoft.VisualStudio.Language.NavigateTo.Interfaces.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Language.NavigateTo.Interfaces.16.4.269\lib\net472\Microsoft.VisualStudio.Language.NavigateTo.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Language.StandardClassification, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Language.StandardClassification.16.0.467\lib\net472\Microsoft.VisualStudio.Language.StandardClassification.dll</HintPath>
@@ -139,11 +145,17 @@
     <Reference Include="Microsoft.VisualStudio.LanguageServer.Client, Version=16.6.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.LanguageServer.Client.16.6.45\lib\net472\Microsoft.VisualStudio.LanguageServer.Client.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.LanguageServer.Client.Implementation, Version=16.6.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.LanguageServer.Client.Implementation.16.6.9\lib\net472\Microsoft.VisualStudio.LanguageServer.Client.Implementation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.LanguageServer.Protocol, Version=16.6.45.62262, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.LanguageServer.Protocol.16.6.45\lib\netstandard1.0\Microsoft.VisualStudio.LanguageServer.Protocol.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.LanguageServer.Protocol.Extensions, Version=16.6.9.4849, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.LanguageServer.Protocol.Extensions.16.6.9\lib\net472\Microsoft.VisualStudio.LanguageServer.Protocol.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <HintPath>..\packages\Microsoft.VisualStudio.OLE.Interop.7.10.6071\lib\net11\Microsoft.VisualStudio.OLE.Interop.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.OLE.Interop.16.7.30126.35\lib\net45\Microsoft.VisualStudio.OLE.Interop.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Package.LanguageService.15.0, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Package.LanguageService.15.0.16.0.28729\lib\net45\Microsoft.VisualStudio.Package.LanguageService.15.0.dll</HintPath>
@@ -152,12 +164,18 @@
       <HintPath>..\packages\Microsoft.VisualStudio.ProjectAggregator.8.0.50728\lib\net20\Microsoft.VisualStudio.ProjectAggregator.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.RemoteControl, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.RemoteControl.14.1.10\lib\net45\Microsoft.VisualStudio.RemoteControl.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Search, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Search.16.4.29423.11111\lib\net45\Microsoft.VisualStudio.Search.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.Setup.Configuration.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Setup.Configuration.Interop.1.16.30\lib\net35\Microsoft.VisualStudio.Setup.Configuration.Interop.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.15.0, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Shell.15.0.16.0.28729\lib\net45\Microsoft.VisualStudio.Shell.15.0.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.15.0.16.4.29417.46\lib\net472\Microsoft.VisualStudio.Shell.15.0.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Design, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Shell.Design.16.0.28729\lib\net45\Microsoft.VisualStudio.Shell.Design.dll</HintPath>
@@ -168,30 +186,26 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Framework, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Framework.16.0.28729\lib\net45\Microsoft.VisualStudio.Shell.Framework.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Framework.16.4.29417.46\lib\net472\Microsoft.VisualStudio.Shell.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.7.10.6072\lib\net11\Microsoft.VisualStudio.Shell.Interop.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.16.7.30126.35\lib\net45\Microsoft.VisualStudio.Shell.Interop.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.10.0.10.0.30320\lib\net20\Microsoft.VisualStudio.Shell.Interop.10.0.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.10.0.16.7.30126.35\lib\net45\Microsoft.VisualStudio.Shell.Interop.10.0.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.11.0.11.0.61031\lib\net20\Microsoft.VisualStudio.Shell.Interop.11.0.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.11.0.16.7.30126.35\lib\net45\Microsoft.VisualStudio.Shell.Interop.11.0.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.12.0.12.0.30111\lib\net20\Microsoft.VisualStudio.Shell.Interop.12.0.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.12.0.16.7.30126.35\lib\net45\Microsoft.VisualStudio.Shell.Interop.12.0.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.14.0.DesignTime, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.14.0.DesignTime.14.3.26929\lib\net20\Microsoft.VisualStudio.Shell.Interop.14.0.DesignTime.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.14.0.DesignTime.16.7.30126.35\lib\net45\Microsoft.VisualStudio.Shell.Interop.14.0.DesignTime.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.15.0.DesignTime, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.15.0.DesignTime.15.0.26932\lib\net20\Microsoft.VisualStudio.Shell.Interop.15.0.DesignTime.dll</HintPath>
@@ -224,7 +238,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50728\lib\net11\Microsoft.VisualStudio.Shell.Interop.8.0.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.8.0.16.7.30126.35\lib\net45\Microsoft.VisualStudio.Shell.Interop.8.0.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <HintPath>..\packages\Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30730\lib\net11\Microsoft.VisualStudio.Shell.Interop.9.0.dll</HintPath>
@@ -232,27 +246,30 @@
     <Reference Include="Microsoft.VisualStudio.TaskRunnerExplorer.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.TaskRunnerExplorer.14.0.14.0.0\lib\net40\Microsoft.VisualStudio.TaskRunnerExplorer.14.0.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.Telemetry, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Telemetry.16.0.233\lib\net45\Microsoft.VisualStudio.Telemetry.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.Text.Data, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Text.Data.16.0.467\lib\net472\Microsoft.VisualStudio.Text.Data.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Text.Data.16.4.269\lib\net472\Microsoft.VisualStudio.Text.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Text.Logic, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Text.Logic.16.0.467\lib\net472\Microsoft.VisualStudio.Text.Logic.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Text.Logic.16.4.269\lib\net472\Microsoft.VisualStudio.Text.Logic.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Text.UI, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Text.UI.16.0.467\lib\net472\Microsoft.VisualStudio.Text.UI.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Text.UI.16.4.269\lib\net472\Microsoft.VisualStudio.Text.UI.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Text.UI.Wpf.16.0.467\lib\net472\Microsoft.VisualStudio.Text.UI.Wpf.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Text.UI.Wpf.16.4.269\lib\net472\Microsoft.VisualStudio.Text.UI.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <HintPath>..\packages\Microsoft.VisualStudio.TextManager.Interop.7.10.6071\lib\net11\Microsoft.VisualStudio.TextManager.Interop.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.TextManager.Interop.16.7.30126.35\lib\net45\Microsoft.VisualStudio.TextManager.Interop.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop.12.1.DesignTime, Version=12.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.TextManager.Interop.12.1.DesignTime.12.1.30330\lib\net20\Microsoft.VisualStudio.TextManager.Interop.12.1.DesignTime.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <HintPath>..\packages\Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50728\lib\net11\Microsoft.VisualStudio.TextManager.Interop.8.0.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.TextManager.Interop.8.0.16.7.30126.35\lib\net45\Microsoft.VisualStudio.TextManager.Interop.8.0.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TextTemplating.15.0, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.TextTemplating.15.0.16.0.28727\lib\net45\Microsoft.VisualStudio.TextTemplating.15.0.dll</HintPath>
@@ -273,7 +290,10 @@
       <HintPath>..\packages\Microsoft.VisualStudio.Threading.16.4.45\lib\net472\Microsoft.VisualStudio.Threading.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Utilities, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Utilities.16.0.28729\lib\net46\Microsoft.VisualStudio.Utilities.dll</HintPath>
+      <HintPath>..\packages\Microsoft.VisualStudio.Utilities.16.4.29416.11111\lib\net46\Microsoft.VisualStudio.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Utilities.Internal, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Utilities.Internal.14.1.2\lib\net45\Microsoft.VisualStudio.Utilities.Internal.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Validation, Version=15.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Validation.15.5.31\lib\netstandard2.0\Microsoft.VisualStudio.Validation.dll</HintPath>
@@ -281,8 +301,17 @@
     <Reference Include="Microsoft.VisualStudio.Web.BrowserLink.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Web.BrowserLink.12.0.12.0.0\lib\net40\Microsoft.VisualStudio.Web.BrowserLink.12.0.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Workspace.VSIntegration.Contracts, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Workspace.VSIntegration.15.0.485\lib\net46\Microsoft.VisualStudio.Workspace.VSIntegration.Contracts.dll</HintPath>
+    <Reference Include="Microsoft.VisualStudio.Workspace, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Workspace.16.0.59\lib\net46\Microsoft.VisualStudio.Workspace.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Workspace.Extensions, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Workspace.16.0.59\lib\net46\Microsoft.VisualStudio.Workspace.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Workspace.Extensions.VS, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Workspace.16.0.59\lib\net46\Microsoft.VisualStudio.Workspace.Extensions.VS.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Workspace.VSIntegration.Contracts, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Workspace.VSIntegration.16.0.59\lib\net46\Microsoft.VisualStudio.Workspace.VSIntegration.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WebTools.Languages.Html.Editor, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\VS.ExternalApis.WebTools.References.16.8.557\Microsoft.WebTools.Languages.Html.Editor.dll</HintPath>
@@ -292,7 +321,6 @@
     </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
-      <Private>True</Private>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -330,23 +358,19 @@
     <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
       <Private>True</Private>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Diagnostics.Tracing, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.Tracing.4.3.0\lib\net462\System.Diagnostics.Tracing.dll</HintPath>
-      <Private>True</Private>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
       <Private>True</Private>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
-      <Private>True</Private>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -474,6 +498,8 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -566,9 +592,12 @@
     <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.SDK.EmbedInteropTypes.15.0.27\build\Microsoft.VisualStudio.SDK.EmbedInteropTypes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.SDK.EmbedInteropTypes.15.0.27\build\Microsoft.VisualStudio.SDK.EmbedInteropTypes.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.3.14\build\Microsoft.VisualStudio.SDK.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.3.14\build\Microsoft.VisualStudio.SDK.Analyzers.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.2.9.4\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.2.9.4\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.VSSDK.BuildTools.16.0.139\build\Microsoft.VSSDK.BuildTools.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VSSDK.BuildTools.16.0.139\build\Microsoft.VSSDK.BuildTools.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.VSSDK.BuildTools.16.0.139\build\Microsoft.VSSDK.BuildTools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VSSDK.BuildTools.16.0.139\build\Microsoft.VSSDK.BuildTools.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.VisualStudioEng.MicroBuild.Core.0.4.1\build\Microsoft.VisualStudioEng.MicroBuild.Core.targets" Condition="Exists('..\packages\Microsoft.VisualStudioEng.MicroBuild.Core.0.4.1\build\Microsoft.VisualStudioEng.MicroBuild.Core.targets')" />
   <Import Project="..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.4.45\build\Microsoft.VisualStudio.Threading.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.4.45\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" />
   <Import Project="..\packages\Microsoft.VisualStudio.SDK.EmbedInteropTypes.15.0.27\build\Microsoft.VisualStudio.SDK.EmbedInteropTypes.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.SDK.EmbedInteropTypes.15.0.27\build\Microsoft.VisualStudio.SDK.EmbedInteropTypes.targets')" />
   <Import Project="..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.3.14\build\Microsoft.VisualStudio.SDK.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.3.14\build\Microsoft.VisualStudio.SDK.Analyzers.targets')" />
+  <Import Project="..\packages\Microsoft.VSSDK.BuildTools.16.0.139\build\Microsoft.VSSDK.BuildTools.targets" Condition="Exists('..\packages\Microsoft.VSSDK.BuildTools.16.0.139\build\Microsoft.VSSDK.BuildTools.targets')" />
 </Project>
