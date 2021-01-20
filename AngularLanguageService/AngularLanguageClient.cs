@@ -38,7 +38,6 @@ namespace AngularLanguageService
         public IEnumerable<string> FilesToWatch => null;
 
         public event AsyncEventHandler<EventArgs> StartAsync;
-        public event AsyncEventHandler<EventArgs> StopAsync;
 
         public object MiddleLayer { get; }
 
