@@ -313,11 +313,17 @@
     <Reference Include="Microsoft.VisualStudio.Workspace.VSIntegration.Contracts, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Workspace.VSIntegration.16.0.59\lib\net46\Microsoft.VisualStudio.Workspace.VSIntegration.Contracts.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WebTools.Languages.Html, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\VS.ExternalApis.WebTools.References.16.8.557\Microsoft.WebTools.Languages.Html.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WebTools.Languages.Html.Editor, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\VS.ExternalApis.WebTools.References.16.8.557\Microsoft.WebTools.Languages.Html.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WebTools.Languages.Shared, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\VS.ExternalApis.WebTools.References.16.8.557\Microsoft.WebTools.Languages.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WebTools.Languages.Shared.Editor, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\VS.ExternalApis.WebTools.References.16.8.557\Microsoft.WebTools.Languages.Shared.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
@@ -558,7 +564,6 @@
     <Compile Include="AngularLanguageClient.cs" />
     <Compile Include="AngularLanguageServiceOutputPane.cs" />
     <Compile Include="AngularTemplateContentDefinition.cs" />
-    <Compile Include="IHtmlCompletionListProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,9 +7,13 @@ using Microsoft.VisualStudio.LanguageServer.Client;
 using LSP = Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Utilities;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Text.Editor;
+using Microsoft.WebTools.Languages.Html;
 using Microsoft.WebTools.Languages.Html.Editor.Completion;
 using Microsoft.WebTools.Languages.Html.Editor.Completion.Def;
+using Microsoft.WebTools.Languages.Html.Editor.Document;
 using Microsoft.WebTools.Languages.Shared.ContentTypes;
+using Microsoft.WebTools.Languages.Shared.Editor;
 using Newtonsoft.Json.Linq;
 
 namespace AngularLanguageService
@@ -32,6 +36,7 @@ namespace AngularLanguageService
 
             var angularCompletions = ThreadHelper.JoinableTaskFactory.Run(async delegate
             {
+                //(ILanguageClient, JToken) result = await CallLanguageServiceBrokerAsync(context);
                 JToken answer = await CallLanguageServiceBrokerAsync(context);
                 return answer;
             });
@@ -45,16 +50,26 @@ namespace AngularLanguageService
         private async Task<JToken> CallLanguageServiceBrokerAsync(HtmlCompletionContext context)
         {
             LSP.CompletionParams completionParams = new LSP.CompletionParams();
-            completionParams.TextDocument = new LSP.TextDocumentIdentifier() { Uri = new Uri(context.Document.Url.Name) };
-            completionParams.Position = context.Position;
-            completionParams.Context = new LSP.CompletionContext() { TriggerKind = LSP.CompletionTriggerKind.Invoked };
+            //completionParams.TextDocument = new LSP.TextDocumentIdentifier() { Uri = new Uri("file:///C:/badabingbadaboom.html") };
+
+            completionParams.TextDocument = new LSP.TextDocumentIdentifier() { Uri = new Uri(context.Document.Url.AbsolutePath) };
+            ITextView textView = context.Session.TextView;
+            int position = textView.Caret.Position.BufferPosition.Position;
+            context.Element.Root.TextProvider.GetLineAndColumnFromPosition(position, out int lineNum, out int colNum);
+            completionParams.Context = new LSP.CompletionContext() { TriggerKind = LSP.CompletionTriggerKind.Invoked, TriggerCharacter = null };
+            completionParams.Position = new LSP.Position(lineNum, colNum);
+            completionParams.PartialResultToken = null;
             JToken requestParams = JObject.FromObject(completionParams);
-            await this.outputPane.WriteAsync($"[HtmlCompletionProvider -> AngularLanguageClient] Request: {requestParams.ToString()}");
+            string requestJson = requestParams.ToString();
+            await this.outputPane.WriteAsync($"[HtmlCompletionProvider -> AngularLanguageClient] Request: {requestJson}");
 
             string[] contentType = new string[] { AngularTemplateContentDefinition.Name };
-            CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromMilliseconds(500));
-            var result = await this.languageServiceBroker.RequestAsync(contentType, null, "textDocument/completion", requestParams, source.Token);
-            //validate language client
+            CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            //return await System.Threading.Tasks.Task.Run(() =>
+            //{
+            //    return this.languageServiceBroker.RequestAsync(contentType, null, "textDocument/completion", requestParams, CancellationToken.None);
+            //});
+            var result = await this.languageServiceBroker.RequestAsync(contentType, null, "textDocument/completion", requestParams, CancellationToken.None);
             return result.Item2;
         }
     }

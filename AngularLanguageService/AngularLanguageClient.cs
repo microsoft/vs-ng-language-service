@@ -165,6 +165,10 @@ namespace AngularLanguageService
             public async Task<JToken> HandleRequestAsync(string methodName, JToken methodParam, Func<JToken, Task<JToken>> sendRequest)
             {
                 await parent.outputPane.WriteAsync($"[Client -> Server][Middle Layer] {methodParam ?? "null"}");
+                if (methodParam["context"]?["_ms_invokeKind"] != null)
+                {
+                    methodParam["context"]?["_ms_invokeKind"].Remove();
+                }
                 var result = await sendRequest(methodParam);
                 await parent.outputPane.WriteAsync($"[Client <- Server][Middle Layer] {result ?? "null"}");
                 return result;
