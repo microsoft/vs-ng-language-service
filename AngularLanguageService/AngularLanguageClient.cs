@@ -58,7 +58,7 @@ namespace AngularLanguageService
             ProcessStartInfo info = new ProcessStartInfo();
             info.FileName = "node.exe";
             info.Arguments =
-                "" // " --inspect=9242"
+                "" //+ " --inspect-brk=9242"
                 + " \"" + Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "node_modules\\@angular\\language-server\\index.js") + "\""
                 // + " --logFile c:\\temp\\angularlsscript.txt"
                 + " --logVerbosity verbose"
@@ -165,10 +165,6 @@ namespace AngularLanguageService
             public async Task<JToken> HandleRequestAsync(string methodName, JToken methodParam, Func<JToken, Task<JToken>> sendRequest)
             {
                 await parent.outputPane.WriteAsync($"[Client -> Server][Middle Layer] {methodParam ?? "null"}");
-                if (methodParam["context"]?["_ms_invokeKind"] != null)
-                {
-                    methodParam["context"]?["_ms_invokeKind"].Remove();
-                }
                 var result = await sendRequest(methodParam);
                 await parent.outputPane.WriteAsync($"[Client <- Server][Middle Layer] {result ?? "null"}");
                 return result;

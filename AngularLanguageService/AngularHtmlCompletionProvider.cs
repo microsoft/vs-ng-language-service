@@ -19,7 +19,6 @@ using Newtonsoft.Json.Linq;
 namespace AngularLanguageService
 {
     [Export(typeof(IHtmlCompletionListProvider))]
-    [HtmlCompletionProvider("Children", "*")]
     [ContentType(HtmlContentTypeDefinition.HtmlContentType)]
     [ContentType(AngularTemplateContentDefinition.Name)]
     public class AngularHtmlCompletionProvider : IHtmlCompletionListProvider
@@ -41,34 +40,34 @@ namespace AngularLanguageService
                 return answer;
             });
 
-            var entry = new HtmlCompletion(angularCompletions.ToString(), angularCompletions.ToString(), String.Empty, null, null, context.Session);
+            foreach (string completion in angularCompletions.ToObject<string[]>())
+            {
+                list.Add(new HtmlCompletion(completion, completion, String.Empty, null, null, context.Session));
+            }
 
-            list.Add(entry);
             return list;
         }
 
         private async Task<JToken> CallLanguageServiceBrokerAsync(HtmlCompletionContext context)
         {
-            LSP.CompletionParams completionParams = new LSP.CompletionParams();
-            //completionParams.TextDocument = new LSP.TextDocumentIdentifier() { Uri = new Uri("file:///C:/badabingbadaboom.html") };
-
-            completionParams.TextDocument = new LSP.TextDocumentIdentifier() { Uri = new Uri(context.Document.Url.AbsolutePath) };
             ITextView textView = context.Session.TextView;
             int position = textView.Caret.Position.BufferPosition.Position;
             context.Element.Root.TextProvider.GetLineAndColumnFromPosition(position, out int lineNum, out int colNum);
-            completionParams.Context = new LSP.CompletionContext() { TriggerKind = LSP.CompletionTriggerKind.Invoked, TriggerCharacter = null };
-            completionParams.Position = new LSP.Position(lineNum, colNum);
-            completionParams.PartialResultToken = null;
+
+            var completionParams = new LSP.CompletionParams()
+            {
+                TextDocument = new LSP.TextDocumentIdentifier() { Uri = new Uri(context.Document.Url.AbsolutePath) },
+                Position = new LSP.Position(lineNum, colNum),
+                Context = new LSP.CompletionContext() { TriggerKind = LSP.CompletionTriggerKind.Invoked, TriggerCharacter = null }   
+            };
+
             JToken requestParams = JObject.FromObject(completionParams);
             string requestJson = requestParams.ToString();
             await this.outputPane.WriteAsync($"[HtmlCompletionProvider -> AngularLanguageClient] Request: {requestJson}");
 
             string[] contentType = new string[] { AngularTemplateContentDefinition.Name };
-            CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
-            //return await System.Threading.Tasks.Task.Run(() =>
-            //{
-            //    return this.languageServiceBroker.RequestAsync(contentType, null, "textDocument/completion", requestParams, CancellationToken.None);
-            //});
+            CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromMilliseconds(500));
+
             var result = await this.languageServiceBroker.RequestAsync(contentType, null, "textDocument/completion", requestParams, CancellationToken.None);
             return result.Item2;
         }
