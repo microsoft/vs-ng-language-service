@@ -66,7 +66,7 @@ namespace AngularLanguageService
             string[] contentType = new string[] { AngularTemplateContentDefinition.Name };
             CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromMilliseconds(500));
 
-            var result = await this.languageServiceBroker.RequestAsync(contentType, null, "textDocument/completion", requestParams, CancellationToken.None);
+            var result = await this.languageServiceBroker.RequestAsync(contentType, null, "textDocument/completion", requestParams, source.Token);
             return result.Item2;
         }
     }
