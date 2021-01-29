@@ -35,7 +35,6 @@ namespace AngularLanguageService
 
             var angularCompletions = ThreadHelper.JoinableTaskFactory.Run(async delegate
             {
-                //(ILanguageClient, JToken) result = await CallLanguageServiceBrokerAsync(context);
                 JToken answer = await CallLanguageServiceBrokerAsync(context);
                 return answer;
             });
