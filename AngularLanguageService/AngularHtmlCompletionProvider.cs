@@ -50,8 +50,8 @@ namespace AngularLanguageService
 
         private async Task<JToken> CallLanguageServiceBrokerAsync(HtmlCompletionContext context)
         {
-            ITextView textView = context.Session.TextView;
-            int position = textView.Caret.Position.BufferPosition.Position;
+            var textView = context.Session.TextView;
+            var position = textView.Caret.Position.BufferPosition.Position;
             context.Element.Root.TextProvider.GetLineAndColumnFromPosition(position, out int lineNum, out int colNum);
 
             var completionParams = new LSP.CompletionParams()
@@ -61,9 +61,8 @@ namespace AngularLanguageService
                 Context = new LSP.CompletionContext() { TriggerKind = LSP.CompletionTriggerKind.Invoked, TriggerCharacter = null }   
             };
 
-            JToken requestParams = JObject.FromObject(completionParams);
-            string requestJson = requestParams.ToString();
-            await this.outputPane.WriteAsync($"[HtmlCompletionProvider -> AngularLanguageClient] Request: {requestJson}");
+            var requestParams = JObject.FromObject(completionParams);
+            await this.outputPane.WriteAsync($"[HtmlCompletionProvider -> AngularLanguageClient] Request: {requestParams}");
 
             string[] contentType = new string[] { AngularTemplateContentDefinition.Name };
             CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromMilliseconds(500));
