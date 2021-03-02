@@ -18,8 +18,11 @@ using Newtonsoft.Json.Linq;
 
 namespace AngularLanguageService
 {
-    [Export(typeof(IHtmlCompletionListProvider))]
-    [ContentType(HtmlContentTypeDefinition.HtmlContentType)]
+    //These two are unnecessary
+    //[Export(typeof(IHtmlCompletionListProvider))]
+    //[ContentType(HtmlContentTypeDefinition.HtmlContentType)]
+
+    [HtmlCompletionProvider("Children", "*")]
     [ContentType(AngularTemplateContentDefinition.Name)]
     public class AngularHtmlCompletionProvider : IHtmlCompletionListProvider
     {
@@ -35,13 +38,15 @@ namespace AngularLanguageService
 
             var angularCompletions = ThreadHelper.JoinableTaskFactory.Run(async delegate
             {
-                JToken answer = await CallLanguageServiceBrokerAsync(context);
-                return answer;
+                JToken completions = await CallLanguageServiceBrokerAsync(context);
+                return completions;
             });
 
-            foreach (string completion in angularCompletions.ToObject<string[]>())
+            JToken[] tokenizedCompletions = angularCompletions.ToObject<JToken[]>();
+            foreach (JToken completion in tokenizedCompletions)
             {
-                list.Add(new HtmlCompletion(completion, completion, String.Empty, null, null, context.Session));
+                string label = completion["label"].ToObject<string>();
+                list.Add(new HtmlCompletion(label, label, String.Empty, null, null, context.Session));
             }
 
             return list;
@@ -57,8 +62,16 @@ namespace AngularLanguageService
             {
                 TextDocument = new LSP.TextDocumentIdentifier() { Uri = new Uri(context.Document.Url.AbsolutePath) },
                 Position = new LSP.Position(lineNum, colNum),
-                Context = new LSP.CompletionContext() { TriggerKind = LSP.CompletionTriggerKind.Invoked, TriggerCharacter = null }   
+                //Context = new LSP.CompletionContext() { TriggerKind = LSP.CompletionTriggerKind.Invoked }
             };
+
+            // TEST STRING
+            //string json = @"{
+            //    textDocument: { uri: 'file:///C:/Users/sheya/source/repos/DotNet5Angular/DotNet5Angular/ClientApp/src/app/counter/counter.component.html' },
+            //    position: { line: 10, character: 1 }
+            //    context: { triggerKind: 1 }
+            //}";
+            //var requestParams = JObject.Parse(json);
 
             var requestParams = JObject.FromObject(completionParams);
             await this.outputPane.WriteAsync($"[HtmlCompletionProvider -> AngularLanguageClient] Request: {requestParams}");
