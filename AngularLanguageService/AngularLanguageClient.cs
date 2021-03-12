@@ -53,7 +53,7 @@ namespace AngularLanguageService
 
         public async Task<Connection> ActivateAsync(CancellationToken token)
         {
-            await outputPane.WriteAsync("Activating language service.");
+            outputPane.WriteAsync("Activating language service.").Forget();
 
             ProcessStartInfo info = new ProcessStartInfo();
             info.FileName = "node.exe";
@@ -75,13 +75,13 @@ namespace AngularLanguageService
             process.StartInfo = info;
             process.ErrorDataReceived += (obj, data) => { outputPane.WriteAsync($"Error from node process: {data.Data}").Forget(); };
 
-            await outputPane.WriteAsync("Starting node process.");
+            outputPane.WriteAsync("Starting node process.").Forget();
 
             try
             {
                 if (process.Start())
                 {
-                    var inputPipe = new Pipe();
+                    var inputPipe = new Pipe(new PipeOptions(useSynchronizationContext: false));
                     var input = process.StandardInput;
                     ForwardInputAsync(inputPipe, input).Forget();
 
@@ -98,28 +98,28 @@ namespace AngularLanguageService
 
         private async Task ForwardInputAsync(Pipe inputPipe, StreamWriter input)
         {
-            await Task.Yield();
+            await TaskScheduler.Default;
 
             while (true)
             {
-                var readContent = await inputPipe.Reader.ReadAsync();
+                var readContent = await inputPipe.Reader.ReadAsync().ConfigureAwait(false);
                 if (readContent.Buffer.Length == 0)
                 {
-                    await Task.Delay(100);
+                    await Task.Delay(100).ConfigureAwait(false);
                 }
                 else
                 {
                     var content = BuffersExtensions.ToArray(readContent.Buffer);
                     outputPane.WriteAsync($"[Client -> Server] {Encoding.UTF8.GetString(content)}").Forget();
                     inputPipe.Reader.AdvanceTo(readContent.Buffer.End);
-                    await input.WriteAsync(Encoding.UTF8.GetString(content).ToCharArray());
+                    await input.WriteAsync(Encoding.UTF8.GetString(content).ToCharArray()).ConfigureAwait(false);
                 }
             }
         }
 
         public async Task OnLoadedAsync()
         {
-            await StartAsync.InvokeAsync(this, EventArgs.Empty).ConfigureAwait(false);
+            await StartAsync.InvokeAsync(this, EventArgs.Empty);
         }
 
         public Task OnServerInitializeFailedAsync(Exception e)
@@ -164,9 +164,9 @@ namespace AngularLanguageService
 
             public async Task<JToken> HandleRequestAsync(string methodName, JToken methodParam, Func<JToken, Task<JToken>> sendRequest)
             {
-                await parent.outputPane.WriteAsync($"[Client -> Server][Middle Layer] {methodParam ?? "null"}");
-                var result = await sendRequest(methodParam);
-                await parent.outputPane.WriteAsync($"[Client <- Server][Middle Layer] {result ?? "null"}");
+                parent.outputPane.WriteAsync($"[Client -> Server][Middle Layer] {methodParam ?? "null"}").Forget();
+                var result = await sendRequest(methodParam).ConfigureAwait(false);
+                parent.outputPane.WriteAsync($"[Client <- Server][Middle Layer] {result ?? "null"}").Forget();
                 return result;
             }
         }
