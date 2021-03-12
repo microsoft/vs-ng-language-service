@@ -161,9 +161,6 @@
     <Reference Include="Microsoft.VisualStudio.LanguageServer.Protocol.Extensions, Version=16.6.9.4849, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.LanguageServer.Protocol.Extensions.16.6.9\lib\net472\Microsoft.VisualStudio.LanguageServer.Protocol.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.LanguageServer.Client.Implementation, Version=16.6.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.LanguageServer.Client.Implementation.16.6.9\lib\net472\Microsoft.VisualStudio.LanguageServer.Client.Implementation.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <HintPath>..\packages\Microsoft.VisualStudio.OLE.Interop.16.7.30126.35\lib\net45\Microsoft.VisualStudio.OLE.Interop.dll</HintPath>
     </Reference>

@@ -7,30 +7,20 @@ using Microsoft.VisualStudio.LanguageServer.Client;
 using LSP = Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Utilities;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.WebTools.Languages.Html;
+using Microsoft.VisualStudio.Threading;
 using Microsoft.WebTools.Languages.Html.Editor.Completion;
 using Microsoft.WebTools.Languages.Html.Editor.Completion.Def;
-using Microsoft.WebTools.Languages.Html.Editor.Document;
-using Microsoft.WebTools.Languages.Shared.ContentTypes;
-using Microsoft.WebTools.Languages.Shared.Editor;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace AngularLanguageService
 {
-    //These two are unnecessary
-    //[Export(typeof(IHtmlCompletionListProvider))]
-    //[ContentType(HtmlContentTypeDefinition.HtmlContentType)]
-
     [HtmlCompletionProvider("Children", "*")]
     [ContentType(AngularTemplateContentDefinition.Name)]
     public class AngularHtmlCompletionProvider : IHtmlCompletionListProvider
     {
         [Import]
-        private readonly ILanguageServiceBroker2 languageServiceBroker = null;
-
-        [Import]
-        private readonly AngularLanguageServiceOutputPane outputPane = null;
+        private readonly ILanguageClientBroker broker = null;
 
         public IList<HtmlCompletion> GetEntries(HtmlCompletionContext context)
         {
@@ -38,9 +28,14 @@ namespace AngularLanguageService
 
             var angularCompletions = ThreadHelper.JoinableTaskFactory.Run(async delegate
             {
-                JToken completions = await CallLanguageServiceBrokerAsync(context);
+                JToken completions = await CallLanguageServiceBrokerAsync(context).ConfigureAwait(false);
                 return completions;
             });
+
+            if (angularCompletions == null)
+            {
+                return list;
+            }
 
             JToken[] tokenizedCompletions = angularCompletions.ToObject<JToken[]>();
             foreach (JToken completion in tokenizedCompletions)
@@ -62,24 +57,16 @@ namespace AngularLanguageService
             {
                 TextDocument = new LSP.TextDocumentIdentifier() { Uri = new Uri(context.Document.Url.AbsolutePath) },
                 Position = new LSP.Position(lineNum, colNum),
-                //Context = new LSP.CompletionContext() { TriggerKind = LSP.CompletionTriggerKind.Invoked }
             };
 
-            // TEST STRING
-            //string json = @"{
-            //    textDocument: { uri: 'file:///C:/Users/sheya/source/repos/DotNet5Angular/DotNet5Angular/ClientApp/src/app/counter/counter.component.html' },
-            //    position: { line: 10, character: 1 }
-            //    context: { triggerKind: 1 }
-            //}";
-            //var requestParams = JObject.Parse(json);
-
             var requestParams = JObject.FromObject(completionParams);
-            await this.outputPane.WriteAsync($"[HtmlCompletionProvider -> AngularLanguageClient] Request: {requestParams}");
 
-            string[] contentType = new string[] { AngularTemplateContentDefinition.Name };
-            CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromMilliseconds(500));
+            var assembly = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name == "Microsoft.VisualStudio.LanguageServer.Client.Implementation").First();
+            var t = assembly.GetType("Microsoft.VisualStudio.LanguageServer.Client.ILanguageServiceBroker2");
+            var m = t.GetMethod("RequestAsync", new[] { typeof(string[]), typeof(Func<JToken, bool>), typeof(string), typeof(JToken), typeof(CancellationToken) });
+            var r = (Task<(ILanguageClient, JToken)>)m.Invoke(broker, new object[] { new[] { AngularTemplateContentDefinition.Name }, null, "textDocument/completion", requestParams, CancellationToken.None });
 
-            var result = await this.languageServiceBroker.RequestAsync(contentType, null, "textDocument/completion", requestParams, CancellationToken.None);
+            var result = await r.ConfigureAwait(false);
             return result.Item2;
         }
     }
