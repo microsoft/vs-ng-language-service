@@ -98,7 +98,7 @@ namespace AngularLanguageService
 
         private async Task ForwardInputAsync(Pipe inputPipe, StreamWriter input)
         {
-            await TaskScheduler.Default;
+            await Task.Yield();
 
             while (true)
             {
@@ -119,7 +119,7 @@ namespace AngularLanguageService
 
         public async Task OnLoadedAsync()
         {
-            await StartAsync.InvokeAsync(this, EventArgs.Empty);
+            await StartAsync.InvokeAsync(this, EventArgs.Empty).ConfigureAwait(false);
         }
 
         public Task OnServerInitializeFailedAsync(Exception e)
