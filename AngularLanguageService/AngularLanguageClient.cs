@@ -98,7 +98,7 @@ namespace AngularLanguageService
 
         private async Task ForwardInputAsync(Pipe inputPipe, StreamWriter input)
         {
-            await Task.Yield();
+            await Task.Yield().ConfigureAwait(false);
 
             while (true)
             {

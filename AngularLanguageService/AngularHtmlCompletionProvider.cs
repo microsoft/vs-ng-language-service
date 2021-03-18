@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.LanguageServer.Client;
 using LSP = Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Utilities;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Threading;
 using Microsoft.WebTools.Languages.Html.Editor.Completion;
 using Microsoft.WebTools.Languages.Html.Editor.Completion.Def;
 using Newtonsoft.Json.Linq;
@@ -21,13 +22,17 @@ namespace AngularLanguageService
         [Import]
         private readonly ILanguageClientBroker broker = null;
 
+        private volatile bool angularClientInitialized = false;
+
+        private System.Reflection.MethodInfo requestAsyncMethod = null;
+
         public IList<HtmlCompletion> GetEntries(HtmlCompletionContext context)
         {
             var list = new List<HtmlCompletion>();
 
             var angularCompletions = ThreadHelper.JoinableTaskFactory.Run(async delegate
             {
-                JToken completions = await CallLanguageServiceBrokerAsync(context).ConfigureAwait(false);
+                var completions = await CallLanguageServiceBrokerAsync(context).ConfigureAwait(false);
                 return completions;
             });
 
@@ -57,15 +62,30 @@ namespace AngularLanguageService
             };
 
             var requestParams = JObject.FromObject(completionParams);
-            var ct = new CancellationTokenSource(200);
+            
+            if (requestAsyncMethod == null)
+            {
+                var assembly = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name == "Microsoft.VisualStudio.LanguageServer.Client.Implementation").First();
+                var t = assembly.GetType("Microsoft.VisualStudio.LanguageServer.Client.ILanguageServiceBroker2");
+                requestAsyncMethod = t.GetMethod("RequestAsync", new[] { typeof(string[]), typeof(Func<JToken, bool>), typeof(string), typeof(JToken), typeof(CancellationToken) });
+            }
 
-            var assembly = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name == "Microsoft.VisualStudio.LanguageServer.Client.Implementation").First();
-            var t = assembly.GetType("Microsoft.VisualStudio.LanguageServer.Client.ILanguageServiceBroker2");
-            var m = t.GetMethod("RequestAsync", new[] { typeof(string[]), typeof(Func<JToken, bool>), typeof(string), typeof(JToken), typeof(CancellationToken) });
-            var r = (Task<(ILanguageClient, JToken)>)m.Invoke(broker, new object[] { new[] { AngularTemplateContentDefinition.Name }, null, "textDocument/completion", requestParams, ct.Token });
+            var r = (Task<(ILanguageClient, JToken)>)requestAsyncMethod.Invoke(broker, new object[] { new[] { AngularTemplateContentDefinition.Name }, null, "textDocument/completion", requestParams, CancellationToken.None });
 
-            var result = await r.ConfigureAwait(false);
-            return result.Item2;
+            if (angularClientInitialized)
+            {
+                var result = await r.ConfigureAwait(false);
+                return result.Item2;
+            }
+            else
+            {
+                System.Threading.Tasks.Task.Run(async () =>
+                {
+                    var unusedResult = await r;
+                    angularClientInitialized = true;
+                }).Forget();
+                return null;
+            }
         }
     }
 }
