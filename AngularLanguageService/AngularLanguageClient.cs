@@ -53,6 +53,8 @@ namespace AngularLanguageService
 
         public async Task<Connection> ActivateAsync(CancellationToken token)
         {
+            await TaskScheduler.Default;
+
             outputPane.WriteAsync("Activating language service.").Forget();
 
             ProcessStartInfo info = new ProcessStartInfo();
@@ -98,28 +100,28 @@ namespace AngularLanguageService
 
         private async Task ForwardInputAsync(Pipe inputPipe, StreamWriter input)
         {
-            await Task.Yield().ConfigureAwait(false);
+            await Task.Yield();
 
             while (true)
             {
-                var readContent = await inputPipe.Reader.ReadAsync().ConfigureAwait(false);
+                var readContent = await inputPipe.Reader.ReadAsync();
                 if (readContent.Buffer.Length == 0)
                 {
-                    await Task.Delay(100).ConfigureAwait(false);
+                    await Task.Delay(100);
                 }
                 else
                 {
                     var content = BuffersExtensions.ToArray(readContent.Buffer);
                     outputPane.WriteAsync($"[Client -> Server] {Encoding.UTF8.GetString(content)}").Forget();
                     inputPipe.Reader.AdvanceTo(readContent.Buffer.End);
-                    await input.WriteAsync(Encoding.UTF8.GetString(content).ToCharArray()).ConfigureAwait(false);
+                    await input.WriteAsync(Encoding.UTF8.GetString(content).ToCharArray());
                 }
             }
         }
 
         public async Task OnLoadedAsync()
         {
-            await StartAsync.InvokeAsync(this, EventArgs.Empty).ConfigureAwait(false);
+            await StartAsync.InvokeAsync(this, EventArgs.Empty);
         }
 
         public Task OnServerInitializeFailedAsync(Exception e)
@@ -165,7 +167,7 @@ namespace AngularLanguageService
             public async Task<JToken> HandleRequestAsync(string methodName, JToken methodParam, Func<JToken, Task<JToken>> sendRequest)
             {
                 parent.outputPane.WriteAsync($"[Client -> Server][Middle Layer] {methodParam ?? "null"}").Forget();
-                var result = await sendRequest(methodParam).ConfigureAwait(false);
+                var result = await sendRequest(methodParam);
                 parent.outputPane.WriteAsync($"[Client <- Server][Middle Layer] {result ?? "null"}").Forget();
                 return result;
             }

@@ -32,7 +32,7 @@ namespace AngularLanguageService
 
             var angularCompletions = ThreadHelper.JoinableTaskFactory.Run(async delegate
             {
-                var completions = await CallLanguageServiceBrokerAsync(context).ConfigureAwait(false);
+                var completions = await CallLanguageServiceBrokerAsync(context);
                 return completions;
             });
 
@@ -74,7 +74,7 @@ namespace AngularLanguageService
 
             if (angularClientInitialized)
             {
-                var result = await r.ConfigureAwait(false);
+                var result = await r;
                 return result.Item2;
             }
             else
