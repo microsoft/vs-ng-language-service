@@ -12,9 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@angular/language-server": "^0.1000.4",
+    "@angular/language-server": "^11.2.8",
     "@types/node": "^13.7.1",
-    "typescript": "^3.9.0",
+    "typescript": "^4.2.3",
     "vscode-jsonrpc": "^5.0.1"
   }
 }
