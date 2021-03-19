@@ -55,7 +55,7 @@ namespace AngularLanguageService
         {
             await TaskScheduler.Default;
 
-            outputPane.WriteAsync("Activating language service.").Forget();
+            LogToOutputPane("Activating language service.");
 
             ProcessStartInfo info = new ProcessStartInfo();
             info.FileName = "node.exe";
@@ -75,15 +75,15 @@ namespace AngularLanguageService
 
             var process = new Process();
             process.StartInfo = info;
-            process.ErrorDataReceived += (obj, data) => { outputPane.WriteAsync($"Error from node process: {data.Data}").Forget(); };
+            process.ErrorDataReceived += (obj, data) => { LogToOutputPane($"Error from node process: {data.Data}"); };
 
-            outputPane.WriteAsync("Starting node process.").Forget();
+            LogToOutputPane("Starting node process.");
 
             try
             {
                 if (process.Start())
                 {
-                    var inputPipe = new Pipe(new PipeOptions(useSynchronizationContext: false));
+                    var inputPipe = new Pipe();
                     var input = process.StandardInput;
                     ForwardInputAsync(inputPipe, input).Forget();
 
@@ -112,11 +112,19 @@ namespace AngularLanguageService
                 else
                 {
                     var content = BuffersExtensions.ToArray(readContent.Buffer);
-                    outputPane.WriteAsync($"[Client -> Server] {Encoding.UTF8.GetString(content)}").Forget();
+                    LogToOutputPane($"[Client -> Server] {Encoding.UTF8.GetString(content)}");
                     inputPipe.Reader.AdvanceTo(readContent.Buffer.End);
                     await input.WriteAsync(Encoding.UTF8.GetString(content).ToCharArray());
                 }
             }
+        }
+
+        /// <summary>
+        /// Writes information to the output pane in a fire-and-forget method so that we do not await the UI thread for logging purposes.
+        /// </summary>
+        void LogToOutputPane(string s)
+        {
+            outputPane.WriteAsync(s).Forget();
         }
 
         public async Task OnLoadedAsync()
@@ -166,9 +174,9 @@ namespace AngularLanguageService
 
             public async Task<JToken> HandleRequestAsync(string methodName, JToken methodParam, Func<JToken, Task<JToken>> sendRequest)
             {
-                parent.outputPane.WriteAsync($"[Client -> Server][Middle Layer] {methodParam ?? "null"}").Forget();
+                parent.LogToOutputPane($"[Client -> Server][Middle Layer] {methodParam ?? "null"}");
                 var result = await sendRequest(methodParam);
-                parent.outputPane.WriteAsync($"[Client <- Server][Middle Layer] {result ?? "null"}").Forget();
+                parent.LogToOutputPane($"[Client <- Server][Middle Layer] {result ?? "null"}");
                 return result;
             }
         }
