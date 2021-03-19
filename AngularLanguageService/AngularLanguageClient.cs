@@ -129,7 +129,7 @@ namespace AngularLanguageService
 
         public async Task OnLoadedAsync()
         {
-            await StartAsync.InvokeAsync(this, EventArgs.Empty);
+            await StartAsync.InvokeAsync(this, EventArgs.Empty).ConfigureAwait(false);
         }
 
         public Task OnServerInitializeFailedAsync(Exception e)
