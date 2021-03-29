@@ -53,12 +53,14 @@ namespace AngularLanguageService
 
         public async Task<Connection> ActivateAsync(CancellationToken token)
         {
-            await outputPane.WriteAsync("Activating language service.");
+            await TaskScheduler.Default;
+
+            LogToOutputPane("Activating language service.");
 
             ProcessStartInfo info = new ProcessStartInfo();
             info.FileName = "node.exe";
             info.Arguments =
-                "" // " --inspect=9242"
+                "" //+ " --inspect-brk=9242"
                 + " \"" + Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "node_modules\\@angular\\language-server\\index.js") + "\""
                 // + " --logFile c:\\temp\\angularlsscript.txt"
                 + " --logVerbosity verbose"
@@ -73,9 +75,9 @@ namespace AngularLanguageService
 
             var process = new Process();
             process.StartInfo = info;
-            process.ErrorDataReceived += (obj, data) => { outputPane.WriteAsync($"Error from node process: {data.Data}").Forget(); };
+            process.ErrorDataReceived += (obj, data) => { LogToOutputPane($"Error from node process: {data.Data}"); };
 
-            await outputPane.WriteAsync("Starting node process.");
+            LogToOutputPane("Starting node process.");
 
             try
             {
@@ -110,11 +112,19 @@ namespace AngularLanguageService
                 else
                 {
                     var content = BuffersExtensions.ToArray(readContent.Buffer);
-                    outputPane.WriteAsync($"[Client -> Server] {Encoding.UTF8.GetString(content)}").Forget();
+                    LogToOutputPane($"[Client -> Server] {Encoding.UTF8.GetString(content)}");
                     inputPipe.Reader.AdvanceTo(readContent.Buffer.End);
                     await input.WriteAsync(Encoding.UTF8.GetString(content).ToCharArray());
                 }
             }
+        }
+
+        /// <summary>
+        /// Writes information to the output pane in a fire-and-forget method so that we do not await the UI thread for logging purposes.
+        /// </summary>
+        void LogToOutputPane(string s)
+        {
+            outputPane.WriteAsync(s).Forget();
         }
 
         public async Task OnLoadedAsync()
@@ -164,9 +174,9 @@ namespace AngularLanguageService
 
             public async Task<JToken> HandleRequestAsync(string methodName, JToken methodParam, Func<JToken, Task<JToken>> sendRequest)
             {
-                await parent.outputPane.WriteAsync($"[Client -> Server][Middle Layer] {methodParam ?? "null"}");
+                parent.LogToOutputPane($"[Client -> Server][Middle Layer] {methodParam ?? "null"}");
                 var result = await sendRequest(methodParam);
-                await parent.outputPane.WriteAsync($"[Client <- Server][Middle Layer] {result ?? "null"}");
+                parent.LogToOutputPane($"[Client <- Server][Middle Layer] {result ?? "null"}");
                 return result;
             }
         }
