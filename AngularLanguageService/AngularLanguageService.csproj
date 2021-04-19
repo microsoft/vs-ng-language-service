@@ -43,10 +43,34 @@
   <PropertyGroup>
     <DelaySign>true</DelaySign>
   </PropertyGroup>
+  <PropertyGroup>
+    <WebToolsVersion>16.10.338-preview2</WebToolsVersion>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="16.9.1180" PrivateAssets="all" />
+    <Reference Include="Microsoft.WebTools.Languages.Html">
+      <HintPath>$(NugetPackageRoot)\VS.ExternalApis.WebTools.References\$(WebToolsVersion)\Microsoft.WebTools.Languages.Html.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.WebTools.Languages.Html.Editor">
+      <HintPath>$(NugetPackageRoot)\VS.ExternalApis.WebTools.References\$(WebToolsVersion)\Microsoft.WebTools.Languages.Html.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.WebTools.Languages.Shared">
+      <HintPath>$(NugetPackageRoot)\VS.ExternalApis.WebTools.References\$(WebToolsVersion)\Microsoft.WebTools.Languages.Shared.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.WebTools.Languages.Shared.Editor">
+      <HintPath>$(NugetPackageRoot)\VS.ExternalApis.WebTools.References\$(WebToolsVersion)\Microsoft.WebTools.Languages.Shared.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="16.10.171" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.VisualStudio.Language.Intellisense" Version="16.10.55" PrivateAssets="all" />
+    <PackageReference Include="VS.ExternalApis.WebTools.References" Version="$(WebToolsVersion)" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AngularHtmlCompletionProvider.cs" />
     <Compile Include="AngularLanguageClient.cs" />
     <Compile Include="AngularLanguageServiceOutputPane.cs" />
     <Compile Include="AngularTemplateContentDefinition.cs" />
@@ -63,19 +87,4 @@
     </FilesToSign>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.VisualStudioEng.MicroBuild.Core.0.4.1\build\Microsoft.VisualStudioEng.MicroBuild.Core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudioEng.MicroBuild.Core.0.4.1\build\Microsoft.VisualStudioEng.MicroBuild.Core.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.VisualStudioEng.MicroBuild.Core.0.4.1\build\Microsoft.VisualStudioEng.MicroBuild.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudioEng.MicroBuild.Core.0.4.1\build\Microsoft.VisualStudioEng.MicroBuild.Core.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.4.45\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.4.45\build\Microsoft.VisualStudio.Threading.Analyzers.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.SDK.EmbedInteropTypes.15.0.27\build\Microsoft.VisualStudio.SDK.EmbedInteropTypes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.SDK.EmbedInteropTypes.15.0.27\build\Microsoft.VisualStudio.SDK.EmbedInteropTypes.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.3.14\build\Microsoft.VisualStudio.SDK.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.3.14\build\Microsoft.VisualStudio.SDK.Analyzers.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.2.9.4\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.2.9.4\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props'))" />
-  </Target>
-  <Import Project="..\packages\Microsoft.VisualStudioEng.MicroBuild.Core.0.4.1\build\Microsoft.VisualStudioEng.MicroBuild.Core.targets" Condition="Exists('..\packages\Microsoft.VisualStudioEng.MicroBuild.Core.0.4.1\build\Microsoft.VisualStudioEng.MicroBuild.Core.targets')" />
-  <Import Project="..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.4.45\build\Microsoft.VisualStudio.Threading.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.4.45\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" />
-  <Import Project="..\packages\Microsoft.VisualStudio.SDK.EmbedInteropTypes.15.0.27\build\Microsoft.VisualStudio.SDK.EmbedInteropTypes.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.SDK.EmbedInteropTypes.15.0.27\build\Microsoft.VisualStudio.SDK.EmbedInteropTypes.targets')" />
-  <Import Project="..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.3.14\build\Microsoft.VisualStudio.SDK.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.3.14\build\Microsoft.VisualStudio.SDK.Analyzers.targets')" />
 </Project>
