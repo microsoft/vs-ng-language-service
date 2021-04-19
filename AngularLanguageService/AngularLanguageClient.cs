@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-using EnvDTE;
 using Microsoft.VisualStudio.LanguageServer.Client;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Threading;
 using Microsoft.VisualStudio.Utilities;
-using Nerdbank.Streams;
 using Newtonsoft.Json.Linq;
 using StreamJsonRpc;
 using System;
@@ -16,7 +14,6 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipelines;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
