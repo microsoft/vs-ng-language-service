@@ -15,11 +15,11 @@ namespace AngularLanguageService
         [Name(Name)]
         [BaseDefinition(CodeRemoteContentDefinition.CodeRemoteBaseTypeName)]
         [BaseDefinition("HTMLX")]
-        internal static ContentTypeDefinition BarContentTypeDefinition;
+        internal static ContentTypeDefinition AngularTemplateContentTypeDefinition;
 
         [Export]
         [FileExtension(".component.html")]
         [ContentType(Name)]
-        internal static FileExtensionToContentTypeDefinition BarFileExtensionDefinition;
+        internal static FileExtensionToContentTypeDefinition AngularTemplateFileExtensionDefinition;
     }
 }
