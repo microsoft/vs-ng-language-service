@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="../VsixExtension.props" />
+
+	<ItemGroup>
+		<!-- LSP dependencies -->
+		<PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="17.2.2105" />
+	</ItemGroup>
+</Project>
