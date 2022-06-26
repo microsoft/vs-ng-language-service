@@ -1,19 +1,25 @@
 <!-- Shared configuration for the VSIX projects. --> 
 <Project>
+	<Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
+	
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<TargetFramework>net472</TargetFramework>
+		<UseCodebase>true</UseCodebase>
 	</PropertyGroup>
 
 	<PropertyGroup>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GeneratePkgDefFile>false</GeneratePkgDefFile>
-		<IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
+		<IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
 		<IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
 		<IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
 		<CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
 		<CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
+
+		<VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
@@ -31,4 +37,7 @@
 	</ItemGroup>
 
 	<Import Project="AngularLanguageService.Shared\AngularLanguageService.Shared.projitems" Label="Shared" />
+	
+	<Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
+	<Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>

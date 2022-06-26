@@ -1,5 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project>
 	<Import Project="../VsixExtension.props" />
+	<Import Project="../VsixExtension.targets" />
 		
 	<ItemGroup>
 		<!-- LSP dependencies -->

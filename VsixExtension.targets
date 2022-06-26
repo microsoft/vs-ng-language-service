@@ -1,0 +1,17 @@
+﻿<Project>
+	<!-- Install the LSP server npm package. --> 
+	<Target Name="PackAngularServer" BeforeTargets="PreBuildEvent">
+		<Message Text="Installing server dependencies..." />
+		<Exec Command="npm i @angular/language-server" />
+		<Exec Command="npm i typescript" />
+	</Target>
+	<ItemGroup>
+		<!-- We exclude the TypeScript localization folder because otherwise the extension path
+		is too long and deployment fails. --> 
+		<Content Include="node_modules\**\*.*" Exclude="node_modules\typescript\loc\**\*.*">
+			<Link>node_modules/%(RecursiveDir)%(Filename)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<IncludeInVSIX>true</IncludeInVSIX>
+		</Content>
+	</ItemGroup>
+</Project>
