@@ -44,6 +44,8 @@ namespace AngularLanguageService
 
         public object CustomMessageTarget => null;
 
+        public bool ShowNotificationOnInitializeFailed => throw new NotImplementedException();
+
         [ImportingConstructor]
         public AngularLanguageClient(AngularLanguageServiceOutputPane outputPane)
         {
@@ -132,7 +134,7 @@ namespace AngularLanguageService
             await StartAsync.InvokeAsync(this, EventArgs.Empty).ConfigureAwait(false);
         }
 
-        public Task OnServerInitializeFailedAsync(Exception e)
+        public Task AttachForCustomMessageAsync(JsonRpc rpc)
         {
             return Task.CompletedTask;
         }
@@ -142,10 +144,11 @@ namespace AngularLanguageService
             return Task.CompletedTask;
         }
 
-        public Task AttachForCustomMessageAsync(JsonRpc rpc)
+        public Task<InitializationFailureContext> OnServerInitializeFailedAsync(ILanguageClientInitializationInfo initializationState)
         {
-            return Task.CompletedTask;
-        }
+			var failureContext = new InitializationFailureContext { FailureMessage = initializationState.InitializationException.Message };
+			return Task.FromResult(failureContext);
+		}
 
         private class MiddleLayerProvider : ILanguageClientMiddleLayer
         {

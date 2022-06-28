@@ -44,7 +44,7 @@
     <DelaySign>true</DelaySign>
   </PropertyGroup>
   <PropertyGroup>
-    <WebToolsVersion>16.10.338-preview2</WebToolsVersion>
+    <WebToolsVersion>17.0.742</WebToolsVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WebTools.Languages.Html">
@@ -65,8 +65,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="16.10.171" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.VisualStudio.Language.Intellisense" Version="16.10.55" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="17.2.2105" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.VisualStudio.Language.Intellisense" Version="17.2.3194" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Protocol" Version="17.3.2017" />
     <PackageReference Include="VS.ExternalApis.WebTools.References" Version="$(WebToolsVersion)" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
