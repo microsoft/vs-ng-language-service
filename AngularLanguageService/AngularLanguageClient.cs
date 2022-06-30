@@ -44,7 +44,7 @@ namespace AngularLanguageService
 
         public object CustomMessageTarget => null;
 
-        public bool ShowNotificationOnInitializeFailed => throw new NotImplementedException();
+        public bool ShowNotificationOnInitializeFailed => true;
 
         [ImportingConstructor]
         public AngularLanguageClient(AngularLanguageServiceOutputPane outputPane)
