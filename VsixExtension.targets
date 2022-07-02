@@ -1,11 +1,13 @@
 ﻿<Project>
-	<!-- Install the LSP server npm package. --> 
+	<!-- Install the dependencies for the LSP server. --> 
 	<Target Name="PackAngularServer" BeforeTargets="PreBuildEvent">
 		<Message Text="Installing server dependencies..." />
 		<Exec Command="npm i @angular/language-server" />
 		<Exec Command="npm i typescript" />
 	</Target>
+	
 	<ItemGroup>
+		<!-- TODO: Not sure if this is okay. -->
 		<!-- We exclude the TypeScript localization folder because otherwise the extension path
 		is too long and deployment fails. --> 
 		<Content Include="node_modules\**\*.*" Exclude="node_modules\typescript\loc\**\*.*">
