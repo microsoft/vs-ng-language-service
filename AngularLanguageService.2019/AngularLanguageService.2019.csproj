@@ -1,9 +1,4 @@
 ﻿<Project>
 	<Import Project="../VsixExtension.props" />
 	<Import Project="../VsixExtension.targets" />
-		
-	<ItemGroup>
-		<!-- LSP dependencies -->
-		<PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="17.2.2105" />
-	</ItemGroup>
 </Project>

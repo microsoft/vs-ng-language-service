@@ -16,6 +16,7 @@ namespace AngularLanguageService.Shared.LanguageServer
 		[Export]
 		[Name(AngularComponentContentTypeName)]
 		[BaseDefinition(CodeRemoteContentDefinition.CodeRemoteContentTypeName)]
+		[BaseDefinition("html")]
 		internal static ContentTypeDefinition AngularComponentContentTypeDefinition;
 
 		[Export]
