@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Community.VisualStudio.Toolkit;
 using Microsoft.VisualStudio.LanguageServer.Client;
+using Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Threading;
 using Microsoft.VisualStudio.Utilities;
 using StreamJsonRpc;
@@ -26,11 +27,12 @@ namespace AngularLanguageService.Shared.LanguageServer
 		/// Pane in the output window for logging the LSP communication.
 		/// </summary>
 		// TODO: Control the verbosity of this pane?
-		internal OutputWindowPane OutputPane = null!; // The pane is created in ActivateAsync, so it's never actually null.
+		internal OutputWindowPane OutputPane = null!; // The pane is created in ActivateAsync, so it's never actually null when we use it.
 
 		private static readonly string[] ConfigurationFiles = new string[] { "**/tsconfig.json" };
 
 		private readonly MiddleLayer middleLayer;
+		private JsonRpc? customMessageRpc;
 
 		[ImportingConstructor]
 		internal LanguageClient(MiddleLayer middleLayer)
@@ -104,7 +106,23 @@ namespace AngularLanguageService.Shared.LanguageServer
 
 		object? ILanguageClientCustomMessage2.CustomMessageTarget => null;
 
-		Task ILanguageClientCustomMessage2.AttachForCustomMessageAsync(JsonRpc rpc) => Task.CompletedTask;
+		Task ILanguageClientCustomMessage2.AttachForCustomMessageAsync(JsonRpc rpc)
+		{
+			customMessageRpc = rpc;
+			return Task.CompletedTask;
+		}
 		#endregion
+
+		internal async Task<CompletionItem[]> GetAngularCompletionsAsync(CompletionParams completionParams)
+		{
+			if (customMessageRpc is not null && await customMessageRpc.InvokeWithParameterObjectAsync<CompletionItem[]>(Methods.TextDocumentCompletionName, completionParams) is CompletionItem[] completions)
+			{
+				return completions;
+			}
+			else
+			{
+				return Array.Empty<CompletionItem>();
+			}
+		}
 	}
 }

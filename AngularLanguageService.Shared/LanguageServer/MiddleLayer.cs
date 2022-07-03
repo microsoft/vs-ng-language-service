@@ -15,7 +15,7 @@ namespace AngularLanguageService.Shared.LanguageServer
 		[ImportingConstructor]
 		internal MiddleLayer([Import(LanguageClient.AngularLanguageClientName, typeof(ILanguageClient))] Lazy<LanguageClient> languageClient)
 		{
-			this.languageClient = languageClient;	
+			this.languageClient = languageClient;
 		}
 
 		#region ILanguageClientMiddleLayer
@@ -34,7 +34,17 @@ namespace AngularLanguageService.Shared.LanguageServer
 			}
 		}
 
-		Task<JToken?> ILanguageClientMiddleLayer.HandleRequestAsync(string methodName, JToken methodParam, Func<JToken, Task<JToken?>> sendRequest) => sendRequest(methodParam);
+		Task<JToken?> ILanguageClientMiddleLayer.HandleRequestAsync(string methodName, JToken methodParam, Func<JToken, Task<JToken?>> sendRequest)
+		{
+			if (string.Equals(methodName, Methods.TextDocumentCompletionName))
+			{
+				return Task.FromResult<JToken?>(null);
+			}
+			else
+			{
+				return sendRequest(methodParam);
+			}
+		}
 		#endregion
 
 		private Task HandleWindowLogNotificationAsync(LogMessageParams logParams)
