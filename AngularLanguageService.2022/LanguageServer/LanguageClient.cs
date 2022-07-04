@@ -13,7 +13,7 @@ using Microsoft.VisualStudio.Threading;
 using Microsoft.VisualStudio.Utilities;
 using StreamJsonRpc;
 
-namespace AngularLanguageService.Shared.LanguageServer
+namespace AngularLanguageService.LanguageServer
 {
 	[Export(typeof(ILanguageClient))]
 	[Export(AngularLanguageClientName, typeof(ILanguageClient))]

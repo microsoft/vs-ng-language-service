@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.LanguageServer.Client;
 using Microsoft.VisualStudio.Utilities;
 
-namespace AngularLanguageService.Shared.LanguageServer
+namespace AngularLanguageService.LanguageServer
 {
 	internal static class ContentDefinitions
 	{
@@ -17,6 +17,7 @@ namespace AngularLanguageService.Shared.LanguageServer
 		[Name(AngularComponentContentTypeName)]
 		[BaseDefinition(CodeRemoteContentDefinition.CodeRemoteContentTypeName)]
 		[BaseDefinition("html")]
+		[BaseDefinition("htmlx")]
 		internal static ContentTypeDefinition AngularComponentContentTypeDefinition;
 
 		[Export]

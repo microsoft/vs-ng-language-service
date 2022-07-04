@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Utilities;
 using Microsoft.WebTools.Languages.Html.Editor.Completion;
 using Microsoft.WebTools.Languages.Html.Editor.Completion.Def;
 
-namespace AngularLanguageService.Shared.LanguageServer
+namespace AngularLanguageService.LanguageServer
 {
 	[HtmlCompletionProvider("Children", "*")]
 	[ContentType(ContentDefinitions.AngularComponentContentTypeName)]

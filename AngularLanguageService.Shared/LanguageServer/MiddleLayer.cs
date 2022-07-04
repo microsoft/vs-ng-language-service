@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.LanguageServer.Client;
 using Microsoft.VisualStudio.LanguageServer.Protocol;
 using Newtonsoft.Json.Linq;
 
-namespace AngularLanguageService.Shared.LanguageServer
+namespace AngularLanguageService.LanguageServer
 {
 	[Export]
 	internal sealed class MiddleLayer : ILanguageClientMiddleLayer
