@@ -1,4 +1,22 @@
 ﻿<Project>
 	<Import Project="../VsixExtension.props" />
+	<ItemGroup>
+		<!-- LSP dependencies -->
+		<PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="17.2.2105" />
+		<PackageReference Include="Microsoft.VisualStudio.LanguageServer.Protocol" Version="17.3.2017" />
+
+		<!-- Extensibility tools -->
+		<PackageReference Include="Community.VisualStudio.Toolkit.16" ExcludeAssets="Runtime">
+			<Version>16.0.451</Version>
+			<IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+
+		<!-- WebTools dependencies for shimming the Angular completions -->
+		<PackageReference Include="Microsoft.WebTools.Languages.Html.Editor" Version="17.1.349" />
+
+		<!-- For resolving NuGet conflicts -->
+		<PackageReference Include="Microsoft.VisualStudio.Shell.Design" Version="17.*" ExcludeAssets="All" />
+	</ItemGroup>
+	
 	<Import Project="../VsixExtension.targets" />
 </Project>
