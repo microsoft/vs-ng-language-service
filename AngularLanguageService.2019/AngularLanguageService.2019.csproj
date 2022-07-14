@@ -1,9 +1,9 @@
 ﻿<Project>
 	<Import Project="../VsixExtension.props" />
+
 	<ItemGroup>
 		<!-- LSP dependencies -->
 		<PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="16.10.1220" />
-		<!--<PackageReference Include="Microsoft.VisualStudio.LanguageServer.Protocol" Version="16.10.1220" />-->
 
 		<!-- Extensibility tools -->
 		<PackageReference Include="Community.VisualStudio.Toolkit.16" ExcludeAssets="Runtime">
@@ -14,6 +14,8 @@
 		<!-- WebTools dependencies for shimming the Angular completions -->
 		<PackageReference Include="Microsoft.WebTools.Languages.Html.Editor" Version="16.10.513" />
 	</ItemGroup>
-	
+
+	<Import Project="../AngularLanguageService.Shared\AngularLanguageService.Shared.projitems" Label="Shared" />
+
 	<Import Project="../VsixExtension.targets" />
 </Project>

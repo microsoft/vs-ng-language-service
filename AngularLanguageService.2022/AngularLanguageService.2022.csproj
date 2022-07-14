@@ -1,5 +1,6 @@
 ﻿<Project>
 	<Import Project="../VsixExtension.props" />
+	
 	<ItemGroup>
 		<!-- LSP dependencies -->
 		<PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="17.2.2105" />
@@ -17,6 +18,8 @@
 		<!-- For resolving NuGet conflicts -->
 		<PackageReference Include="Microsoft.VisualStudio.Shell.Design" Version="17.*" ExcludeAssets="All" />
 	</ItemGroup>
+
+	<Import Project="../AngularLanguageService.Shared\AngularLanguageService.Shared.projitems" Label="Shared" />
 	
 	<Import Project="../VsixExtension.targets" />
 </Project>
