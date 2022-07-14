@@ -52,6 +52,8 @@ Global
 		SolutionGuid = {A91B6AA6-2DE9-4792-B3D9-E8945946E46B}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		AngularLanguageService.Shared\AngularLanguageService.Shared.projitems*{0fb32ed1-3617-490b-b95c-bd54bd47d8ad}*SharedItemsImports = 5
+		AngularLanguageService.Shared\AngularLanguageService.Shared.projitems*{a87e42ac-5bd4-4a6b-9615-71fed9815944}*SharedItemsImports = 5
 		AngularLanguageService.Shared\AngularLanguageService.Shared.projitems*{ceedcd98-2c7f-4baf-bbc3-a1c7d9cc6a57}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

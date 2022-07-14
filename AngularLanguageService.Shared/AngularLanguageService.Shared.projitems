@@ -12,5 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\CompletionProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\ContentDefinitions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\MiddleLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VisualStudio\Package.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VisualStudio\ToolsOptionsPage.cs" />
   </ItemGroup>
 </Project>

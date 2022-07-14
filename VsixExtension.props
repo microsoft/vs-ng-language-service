@@ -8,6 +8,7 @@
 		<Nullable>enable</Nullable>
 		<TargetFramework>net472</TargetFramework>
 		<UseCodebase>true</UseCodebase>
+		<NoWarn>$(NoWarn);CS1762;CVSTBLD002</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -39,7 +40,6 @@
 	<!--TODO: There's a warning with the Newtonsoft.Json versions ("The version of Newtonsoft.Json cannot be greater than 9.0.1, 
 	but version 13.0.1 is currently being used."). Fix it. -->
 
-	<Import Project="AngularLanguageService.Shared\AngularLanguageService.Shared.projitems" Label="Shared" />
 	<Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
 	<Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
