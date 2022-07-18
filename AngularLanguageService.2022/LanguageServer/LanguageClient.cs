@@ -6,7 +6,6 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Community.VisualStudio.Toolkit;
 using Microsoft.VisualStudio.LanguageServer.Client;
 using Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Threading;
@@ -22,12 +21,6 @@ namespace AngularLanguageService.LanguageServer
 	internal sealed class LanguageClient : ILanguageClient, ILanguageClientCustomMessage2
 	{
 		internal const string AngularLanguageClientName = "Angular Language Service Extension";
-
-		/// <summary>
-		/// Pane in the output window for logging the LSP communication.
-		/// </summary>
-		// TODO: Control the verbosity of this pane?
-		internal OutputWindowPane OutputPane = null!; // The pane is created in ActivateAsync, so it's never actually null when we use it.
 
 		private static readonly string[] ConfigurationFiles = new string[] { "**/tsconfig.json" };
 
@@ -57,10 +50,8 @@ namespace AngularLanguageService.LanguageServer
 
 		bool ILanguageClient.ShowNotificationOnInitializeFailed => true;
 
-		async Task<Connection?> ILanguageClient.ActivateAsync(CancellationToken token)
+		Task<Connection?> ILanguageClient.ActivateAsync(CancellationToken token)
 		{
-			OutputPane = await OutputWindowPane.CreateAsync(AngularLanguageClientName);
-
 			string dependenciesPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "node_modules");
 			var startInfo = new ProcessStartInfo
 			{
@@ -84,10 +75,10 @@ namespace AngularLanguageService.LanguageServer
 
 			if (process.Start())
 			{
-				return new Connection(process.StandardOutput.BaseStream, process.StandardInput.BaseStream);
+				return Task.FromResult<Connection?>(new Connection(process.StandardOutput.BaseStream, process.StandardInput.BaseStream));
 			}
 
-			return null;
+			return Task.FromResult<Connection?>(null);
 		}
 
 		Task ILanguageClient.OnLoadedAsync() => StartAsync.InvokeAsync(this, EventArgs.Empty);
