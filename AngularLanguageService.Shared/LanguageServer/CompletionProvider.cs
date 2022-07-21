@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.Imaging;
 using Microsoft.VisualStudio.LanguageServer.Client;
 using Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Shell;
@@ -44,8 +43,6 @@ namespace AngularLanguageService.LanguageServer
 					iconAutomationText: string.Empty,
 					session: context.Session
 				);
-				// TODO: Use a different icon?
-				htmlCompletion.SetIconMoniker(KnownMonikers.NewWebSite);
 				completions.Add(htmlCompletion);
 			}
 
