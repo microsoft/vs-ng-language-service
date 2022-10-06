@@ -4,16 +4,6 @@
         <Message Text="Installing server dependencies..." />
         <Exec Command="npm ci" />
     </Target>
-    <ItemGroup>
-        <!-- TODO: Not sure if this is okay. -->
-        <!-- We exclude the TypeScript localization folder because otherwise the extension path
-        is too long and deployment fails. -->
-        <Content Include="node_modules\**\*.*" Exclude="node_modules\typescript\loc\**\*.*">
-            <Link>node_modules/%(RecursiveDir)%(Filename)%(Extension)</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <IncludeInVSIX>true</IncludeInVSIX>
-        </Content>
-    </ItemGroup>
 
     <!-- As an extension, we need to include the assembly of the LSP protocol (see https://devdiv.visualstudio.com/DevDiv/_wiki/wikis/DevDiv.wiki/9834/Referencing-LanguageServer.Protocol-LanguageServer.Protocol.Extensions-or-LanguageServer.Protocol.Internal). -->
     <Target Name="IncludeProtocolAssembly" AfterTargets="GetVsixSourceItems">
@@ -21,4 +11,16 @@
             <VSIXSourceItem Include="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Microsoft.VisualStudio.LanguageServer.Protocol'" />
         </ItemGroup>
     </Target>
+    
+    <ItemGroup>
+        <Content Include="node_modules\**\*.*">
+            <Link>node_modules/%(RecursiveDir)%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <IncludeInVSIX>true</IncludeInVSIX>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="source.extension.vsixmanifest" />
+    </ItemGroup>
 </Project>
