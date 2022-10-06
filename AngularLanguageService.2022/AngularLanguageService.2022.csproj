@@ -11,6 +11,9 @@
 
         <!-- For resolving NuGet conflicts -->
         <PackageReference Include="Microsoft.VisualStudio.Shell.Design" Version="17.*" ExcludeAssets="All" />
+
+        <!-- Some dependencies indirectly depend on older versions of Newtonsoft.Json so we explicitly set it here. -->
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
     <Import Project="../AngularLanguageService.Shared\AngularLanguageService.Shared.projitems" Label="Shared" />

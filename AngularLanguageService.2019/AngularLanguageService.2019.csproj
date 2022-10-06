@@ -7,6 +7,9 @@
 
         <!-- WebTools dependencies for shimming the Angular completions -->
         <PackageReference Include="Microsoft.WebTools.Languages.Html.Editor" Version="16.10.513" />
+
+        <!-- Some dependencies indirectly depend on older versions of Newtonsoft.Json so we explicitly set it here. -->
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
     <Import Project="../AngularLanguageService.Shared\AngularLanguageService.Shared.projitems" Label="Shared" />
