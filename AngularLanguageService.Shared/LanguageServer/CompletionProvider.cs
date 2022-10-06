@@ -12,58 +12,58 @@ using Microsoft.WebTools.Languages.Html.Editor.Completion.Def;
 
 namespace AngularLanguageService.LanguageServer
 {
-	[HtmlCompletionProvider("Children", "*")]
-	[ContentType(ContentDefinitions.AngularComponentContentTypeName)]
-	internal sealed class CompletionProvider : IHtmlCompletionListProvider
-	{
-		private readonly LanguageClient languageClient;
+    [HtmlCompletionProvider("Children", "*")]
+    [ContentType(ContentDefinitions.AngularComponentContentTypeName)]
+    internal sealed class CompletionProvider : IHtmlCompletionListProvider
+    {
+        private readonly LanguageClient languageClient;
 
-		[ImportingConstructor]
-		internal CompletionProvider([Import(LanguageClient.AngularLanguageClientName, typeof(ILanguageClient))] LanguageClient languageClient)
-		{
-			this.languageClient = languageClient;
-		}
+        [ImportingConstructor]
+        internal CompletionProvider([Import(LanguageClient.AngularLanguageClientName, typeof(ILanguageClient))] LanguageClient languageClient)
+        {
+            this.languageClient = languageClient;
+        }
 
-		#region IHtmlCompletionListProvider implementation
-		IList<HtmlCompletion> IHtmlCompletionListProvider.GetEntries(HtmlCompletionContext context)
-		{
-			var completions = new List<HtmlCompletion>();
+        #region IHtmlCompletionListProvider implementation
+        IList<HtmlCompletion> IHtmlCompletionListProvider.GetEntries(HtmlCompletionContext context)
+        {
+            var completions = new List<HtmlCompletion>();
 
 #pragma warning disable VSTHRD104 // Offer async methods
-			CompletionItem[] angularCompletions = ThreadHelper.JoinableTaskFactory.Run(async () => await GetAngularCompletionsAsync(context));
+            CompletionItem[] angularCompletions = ThreadHelper.JoinableTaskFactory.Run(async () => await GetAngularCompletionsAsync(context));
 #pragma warning restore VSTHRD104 // Offer async methods
 
-			foreach (CompletionItem completion in angularCompletions)
-			{
-				var htmlCompletion = new HtmlCompletion(
-					displayText: completion.Label,
-					insertionText: completion.TextEdit?.NewText ?? completion.Label,
-					description: completion.Detail ?? string.Empty,
-					iconSource: null,
-					iconAutomationText: string.Empty,
-					session: context.Session
-				);
-				completions.Add(htmlCompletion);
-			}
+            foreach (CompletionItem completion in angularCompletions)
+            {
+                var htmlCompletion = new HtmlCompletion(
+                    displayText: completion.Label,
+                    insertionText: completion.TextEdit?.NewText ?? completion.Label,
+                    description: completion.Detail ?? string.Empty,
+                    iconSource: null,
+                    iconAutomationText: string.Empty,
+                    session: context.Session
+                );
+                completions.Add(htmlCompletion);
+            }
 
-			return completions;
-		}
-		#endregion
+            return completions;
+        }
+        #endregion
 
-		private Task<CompletionItem[]> GetAngularCompletionsAsync(HtmlCompletionContext context)
-		{
-			ITextView textView = context!.Session!.TextView;
-			int position = textView.Caret.Position.BufferPosition.Position;
-			context!.Element!.Root.TextProvider.GetLineAndColumnFromPosition(position, out int line, out int column);
+        private Task<CompletionItem[]> GetAngularCompletionsAsync(HtmlCompletionContext context)
+        {
+            ITextView textView = context!.Session!.TextView;
+            int position = textView.Caret.Position.BufferPosition.Position;
+            context!.Element!.Root.TextProvider.GetLineAndColumnFromPosition(position, out int line, out int column);
 
-			var uri = new Uri(context!.Document!.Url.AbsolutePath);
-			var completionParams = new CompletionParams
-			{
-				TextDocument = new TextDocumentIdentifier { Uri = uri },
-				Position = new Position { Line = line, Character = column }
-			};
+            var uri = new Uri(context!.Document!.Url.AbsolutePath);
+            var completionParams = new CompletionParams
+            {
+                TextDocument = new TextDocumentIdentifier { Uri = uri },
+                Position = new Position { Line = line, Character = column }
+            };
 
-			return languageClient.GetAngularCompletionsAsync(completionParams);
-		}
-	}
+            return languageClient.GetAngularCompletionsAsync(completionParams);
+        }
+    }
 }
