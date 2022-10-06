@@ -1,52 +1,53 @@
 <!-- Shared configuration for the VSIX projects. -->
 <Project>
-	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+    <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 
-	<PropertyGroup>
-		<OutputType>Library</OutputType>
-		<LangVersion>latest</LangVersion>
-		<Nullable>enable</Nullable>
-		<TargetFramework>net472</TargetFramework>
-		<UseCodebase>true</UseCodebase>
-		<NoWarn>$(NoWarn);CS1762;CVSTBLD002</NoWarn>
-	</PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <TargetFramework>net472</TargetFramework>
+        <UseCodebase>true</UseCodebase>
+        <NoWarn>$(NoWarn);CS1762;CVSTBLD002</NoWarn>
+        <RootNamespace>AngularLanguageService</RootNamespace>
+    </PropertyGroup>
 
-	<PropertyGroup>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<GeneratePkgDefFile>false</GeneratePkgDefFile>
-		<IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
-		<IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
-		<IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
-		<CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
-		<CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
+    <PropertyGroup>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GeneratePkgDefFile>false</GeneratePkgDefFile>
+        <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+        <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+        <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
+        <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+        <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
 
-		<VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-	</PropertyGroup>
+        <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-		<DeployExtension>True</DeployExtension>
-	</PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+        <DeployExtension>True</DeployExtension>
+    </PropertyGroup>
 
-	<PropertyGroup>
-		<StartAction>Program</StartAction>
-		<StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
-		<StartArguments>/rootsuffix Exp</StartArguments>
-	</PropertyGroup>
+    <PropertyGroup>
+        <StartAction>Program</StartAction>
+        <StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
+        <StartArguments>/rootsuffix Exp</StartArguments>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<None Include="source.extension.vsixmanifest" />
-	</ItemGroup>
+    <ItemGroup>
+        <None Include="source.extension.vsixmanifest" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<Content Include="../EULA.rtf">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-			<IncludeInVSIX>true</IncludeInVSIX>
-		</Content>
-	</ItemGroup>
+    <ItemGroup>
+        <Content Include="../EULA.rtf">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <IncludeInVSIX>true</IncludeInVSIX>
+        </Content>
+    </ItemGroup>
 
-	<!--TODO: There's a warning with the Newtonsoft.Json versions ("The version of Newtonsoft.Json cannot be greater than 9.0.1, 
-	but version 13.0.1 is currently being used."). Fix it. -->
+    <!-- TODO: There's a warning with the Newtonsoft.Json versions ("The version of Newtonsoft.Json cannot be greater than 9.0.1,
+    but version 13.0.1 is currently being used."). Fix it. -->
 
-	<Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
-	<Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+    <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
+    <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>

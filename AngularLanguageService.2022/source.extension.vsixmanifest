@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-	<Metadata>
-		<Identity Id="AngularLS.bf76f463-39ee-4ab1-91be-0f47c4b595ca" Version="1.0" Language="en-US" Publisher="Microsoft" />
-		<DisplayName>Angular Language Service 2022</DisplayName>
-		<Description>Provides the Angular language service to enable editor features for Angular templates.</Description>
-		<License>EULA.rtf</License>
-	</Metadata>
-	<Installation>
-		<InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
-			<ProductArchitecture>amd64</ProductArchitecture>
-		</InstallationTarget>
-	</Installation>
-	<Dependencies>
-		<Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
-	</Dependencies>
-	<Prerequisites>
-		<Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,)" DisplayName="Visual Studio core editor" />
-	</Prerequisites>
-	<Assets>
-		<Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
-	</Assets>
+    <Metadata>
+        <Identity Id="AngularLS.bf76f463-39ee-4ab1-91be-0f47c4b595ca" Version="1.0" Language="en-US" Publisher="Microsoft" />
+        <DisplayName>Angular Language Service 2022</DisplayName>
+        <Description>Provides the Angular language service to enable editor features for Angular templates.</Description>
+        <License>EULA.rtf</License>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+    </Dependencies>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,)" DisplayName="Visual Studio core editor" />
+    </Prerequisites>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    </Assets>
 </PackageManifest>
 
