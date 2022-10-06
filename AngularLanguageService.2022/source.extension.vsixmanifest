@@ -4,6 +4,7 @@
 		<Identity Id="AngularLS.bf76f463-39ee-4ab1-91be-0f47c4b595ca" Version="1.0" Language="en-US" Publisher="Microsoft" />
 		<DisplayName>Angular Language Service 2022</DisplayName>
 		<Description>Provides the Angular language service to enable editor features for Angular templates.</Description>
+		<License>EULA.rtf</License>
 	</Metadata>
 	<Installation>
 		<InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
