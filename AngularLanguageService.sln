@@ -12,38 +12,47 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		LICENSE.txt = LICENSE.txt
 		SECURITY.md = SECURITY.md
-		VsixExtension.props = VsixExtension.props
 		VsixExtension.targets = VsixExtension.targets
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AngularLanguageService.2019", "AngularLanguageService.2019\AngularLanguageService.2019.csproj", "{0FB32ED1-3617-490B-B95C-BD54BD47D8AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularLanguageService.2019", "AngularLanguageService.2019\AngularLanguageService.2019.csproj", "{73285786-F86A-4659-B739-2D2A50CD074B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AngularLanguageService.2022", "AngularLanguageService.2022\AngularLanguageService.2022.csproj", "{A87E42AC-5BD4-4A6B-9615-71FED9815944}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularLanguageService.2022", "AngularLanguageService.2022\AngularLanguageService.2022.csproj", "{A847FCD3-6F31-4D7D-AB21-09A27AF1E279}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|arm64 = Debug|arm64
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|arm64 = Release|arm64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0FB32ED1-3617-490B-B95C-BD54BD47D8AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FB32ED1-3617-490B-B95C-BD54BD47D8AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FB32ED1-3617-490B-B95C-BD54BD47D8AD}.Debug|x86.ActiveCfg = Debug|x86
-		{0FB32ED1-3617-490B-B95C-BD54BD47D8AD}.Debug|x86.Build.0 = Debug|x86
-		{0FB32ED1-3617-490B-B95C-BD54BD47D8AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FB32ED1-3617-490B-B95C-BD54BD47D8AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FB32ED1-3617-490B-B95C-BD54BD47D8AD}.Release|x86.ActiveCfg = Release|x86
-		{0FB32ED1-3617-490B-B95C-BD54BD47D8AD}.Release|x86.Build.0 = Release|x86
-		{A87E42AC-5BD4-4A6B-9615-71FED9815944}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A87E42AC-5BD4-4A6B-9615-71FED9815944}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A87E42AC-5BD4-4A6B-9615-71FED9815944}.Debug|x86.ActiveCfg = Debug|x86
-		{A87E42AC-5BD4-4A6B-9615-71FED9815944}.Debug|x86.Build.0 = Debug|x86
-		{A87E42AC-5BD4-4A6B-9615-71FED9815944}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A87E42AC-5BD4-4A6B-9615-71FED9815944}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A87E42AC-5BD4-4A6B-9615-71FED9815944}.Release|x86.ActiveCfg = Release|x86
-		{A87E42AC-5BD4-4A6B-9615-71FED9815944}.Release|x86.Build.0 = Release|x86
+		{73285786-F86A-4659-B739-2D2A50CD074B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73285786-F86A-4659-B739-2D2A50CD074B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73285786-F86A-4659-B739-2D2A50CD074B}.Debug|arm64.ActiveCfg = Debug|arm64
+		{73285786-F86A-4659-B739-2D2A50CD074B}.Debug|arm64.Build.0 = Debug|arm64
+		{73285786-F86A-4659-B739-2D2A50CD074B}.Debug|x86.ActiveCfg = Debug|x86
+		{73285786-F86A-4659-B739-2D2A50CD074B}.Debug|x86.Build.0 = Debug|x86
+		{73285786-F86A-4659-B739-2D2A50CD074B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73285786-F86A-4659-B739-2D2A50CD074B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73285786-F86A-4659-B739-2D2A50CD074B}.Release|arm64.ActiveCfg = Release|arm64
+		{73285786-F86A-4659-B739-2D2A50CD074B}.Release|arm64.Build.0 = Release|arm64
+		{73285786-F86A-4659-B739-2D2A50CD074B}.Release|x86.ActiveCfg = Release|x86
+		{73285786-F86A-4659-B739-2D2A50CD074B}.Release|x86.Build.0 = Release|x86
+		{A847FCD3-6F31-4D7D-AB21-09A27AF1E279}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A847FCD3-6F31-4D7D-AB21-09A27AF1E279}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A847FCD3-6F31-4D7D-AB21-09A27AF1E279}.Debug|arm64.ActiveCfg = Debug|arm64
+		{A847FCD3-6F31-4D7D-AB21-09A27AF1E279}.Debug|arm64.Build.0 = Debug|arm64
+		{A847FCD3-6F31-4D7D-AB21-09A27AF1E279}.Debug|x86.ActiveCfg = Debug|x86
+		{A847FCD3-6F31-4D7D-AB21-09A27AF1E279}.Debug|x86.Build.0 = Debug|x86
+		{A847FCD3-6F31-4D7D-AB21-09A27AF1E279}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A847FCD3-6F31-4D7D-AB21-09A27AF1E279}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A847FCD3-6F31-4D7D-AB21-09A27AF1E279}.Release|arm64.ActiveCfg = Release|arm64
+		{A847FCD3-6F31-4D7D-AB21-09A27AF1E279}.Release|arm64.Build.0 = Release|arm64
+		{A847FCD3-6F31-4D7D-AB21-09A27AF1E279}.Release|x86.ActiveCfg = Release|x86
+		{A847FCD3-6F31-4D7D-AB21-09A27AF1E279}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,8 +61,8 @@ Global
 		SolutionGuid = {A91B6AA6-2DE9-4792-B3D9-E8945946E46B}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		AngularLanguageService.Shared\AngularLanguageService.Shared.projitems*{0fb32ed1-3617-490b-b95c-bd54bd47d8ad}*SharedItemsImports = 5
-		AngularLanguageService.Shared\AngularLanguageService.Shared.projitems*{a87e42ac-5bd4-4a6b-9615-71fed9815944}*SharedItemsImports = 5
+		AngularLanguageService.Shared\AngularLanguageService.Shared.projitems*{73285786-f86a-4659-b739-2d2a50cd074b}*SharedItemsImports = 4
+		AngularLanguageService.Shared\AngularLanguageService.Shared.projitems*{a847fcd3-6f31-4d7d-ab21-09a27af1e279}*SharedItemsImports = 4
 		AngularLanguageService.Shared\AngularLanguageService.Shared.projitems*{ceedcd98-2c7f-4baf-bbc3-a1c7d9cc6a57}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

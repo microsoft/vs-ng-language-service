@@ -52,9 +52,9 @@ namespace AngularLanguageService.LanguageServer
 
         private Task<CompletionItem[]> GetAngularCompletionsAsync(HtmlCompletionContext context)
         {
-            ITextView textView = context!.Session!.TextView;
+            ITextView textView = context.Session.TextView;
             int position = textView.Caret.Position.BufferPosition.Position;
-            context!.Element!.Root.TextProvider.GetLineAndColumnFromPosition(position, out int line, out int column);
+            context.Element.Root.TextProvider.GetLineAndColumnFromPosition(position, out int line, out int column);
 
             var uri = new Uri(context!.Document!.Url.AbsolutePath);
             var completionParams = new CompletionParams

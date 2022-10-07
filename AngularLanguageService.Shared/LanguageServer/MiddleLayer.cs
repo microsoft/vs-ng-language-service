@@ -16,11 +16,11 @@ namespace AngularLanguageService.LanguageServer
         Task ILanguageClientMiddleLayer.HandleNotificationAsync(string methodName, JToken methodParam, Func<JToken, Task> sendNotification)
             => sendNotification(methodParam);
 
-        Task<JToken?> ILanguageClientMiddleLayer.HandleRequestAsync(string methodName, JToken methodParam, Func<JToken, Task<JToken?>> sendRequest)
+        Task<JToken> ILanguageClientMiddleLayer.HandleRequestAsync(string methodName, JToken methodParam, Func<JToken, Task<JToken>> sendRequest)
         {
             if (string.Equals(methodName, Methods.TextDocumentCompletionName))
             {
-                return Task.FromResult<JToken?>(null);
+                return Task.FromResult<JToken>(null);
             }
             else
             {

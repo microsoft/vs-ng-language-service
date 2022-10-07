@@ -1,4 +1,4 @@
-﻿<Project>
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <!-- Install the dependencies for the LSP server. -->
     <Target Name="PackAngularServer" BeforeTargets="PreBuildEvent">
         <Message Text="Installing server dependencies..." />
@@ -18,9 +18,5 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <IncludeInVSIX>true</IncludeInVSIX>
         </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Include="source.extension.vsixmanifest" />
     </ItemGroup>
 </Project>
