@@ -7,7 +7,7 @@
     },
     "overview": "README.md", // Path to the "readme" file that gets uploaded to the Marketplace. Required.
     "priceCategory": "free", // Either "free", "trial", or "paid". Defaults to "free".
-    "publisher": "Microsoft", // The name of the publisher. Required.
+    "publisher": "TypeScriptTeam", // The name of the publisher. Required.
     "private": false, // Specifies whether or not the extension should be public when uploaded. Defaults to false.
     "qna": true, // Specifies whether or not the extension should have a Q&A section. Defaults to true.
     "repo": "https://github.com/microsoft/vs-ng-language-service" // Not required.
