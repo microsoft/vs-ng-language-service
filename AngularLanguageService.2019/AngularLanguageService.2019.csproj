@@ -21,9 +21,8 @@
         <StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
         <StartArguments>/rootsuffix Exp</StartArguments>
         <!-- VSIX configuration -->
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <GeneratePkgDefFile>false</GeneratePkgDefFile>
-        <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+        <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
         <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
         <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
         <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
