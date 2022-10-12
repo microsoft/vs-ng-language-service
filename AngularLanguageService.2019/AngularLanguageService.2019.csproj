@@ -63,6 +63,12 @@
         </Content>
     </ItemGroup>
     <ItemGroup>
+        <!-- MicroBuild signing -->
+        <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="1.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+        
         <!-- LSP dependencies -->
         <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="16.10.1220" />
         <!-- WebTools dependencies for shimming the Angular completions -->
@@ -77,7 +83,7 @@
         </PackageReference>
     </ItemGroup>
     <ItemGroup>
-    <!-- Signing -->
+        <!-- Signing -->
         <FilesToSign Include="$(OutDir)\AngularLanguageService.2019.vsix">
             <Authenticode>VsixSHA2</Authenticode>
         </FilesToSign>

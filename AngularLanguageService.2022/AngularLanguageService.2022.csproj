@@ -65,6 +65,12 @@
         </Content>
     </ItemGroup>
     <ItemGroup>
+        <!-- MicroBuild signing -->
+        <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="1.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+
         <!-- LSP dependencies -->
         <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="17.2.2105" />
         <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Protocol" Version="17.3.2017" />
@@ -85,7 +91,7 @@
         </PackageReference>
     </ItemGroup>
     <ItemGroup>
-    <!-- Signing -->
+        <!-- Signing -->
         <FilesToSign Include="$(OutDir)\AngularLanguageService.2022.vsix">
             <Authenticode>VsixSHA2</Authenticode>
         </FilesToSign>
