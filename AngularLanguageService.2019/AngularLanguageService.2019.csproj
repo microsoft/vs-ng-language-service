@@ -59,6 +59,7 @@
     <None Include="FinalPublicKey.snk" />
     <None Include="package-lock.json" />
     <None Include="package.json" />
+    <None Include="manifest.json" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>

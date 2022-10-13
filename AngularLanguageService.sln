@@ -11,7 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		LICENSE.txt = LICENSE.txt
-		manifest.json = manifest.json
 		README.md = README.md
 		SECURITY.md = SECURITY.md
 		VsixExtension.targets = VsixExtension.targets
