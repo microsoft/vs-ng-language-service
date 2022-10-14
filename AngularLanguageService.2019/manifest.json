@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json.schemastore.org/vsix-publish",
+    "categories": [ "coding" ],
+    "identity": {
+        "internalName": "AngularLanguageService",
+        "tags": [ "angular" ]
+    },
+    "overview": "../README.md",
+    "priceCategory": "free",
+    "publisher": "TypeScriptTeam",
+    "private": false,
+    "qna": true,
+    "repo": "https://github.com/microsoft/vs-ng-language-service"
+}

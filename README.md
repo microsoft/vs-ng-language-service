@@ -1,6 +1,6 @@
 # Angular Language Service for Visual Studio
 
-![ALS](https://media.giphy.com/media/Xxob53hbQT0MPaeDqF/giphy.gif)
+![VS Angular language service](https://media.giphy.com/media/Xxob53hbQT0MPaeDqF/giphy.gif)
 
 This is an extension made to bring in the Angular Language Service to Angular templates being created in Visual Studio.
 
@@ -13,21 +13,23 @@ This is an extension made to bring in the Angular Language Service to Angular te
 ## Usage
 
 1. Download the Extension from the Visual Studio Marketplace.
+    - [VS 2019](https://marketplace.visualstudio.com/items?itemName=TypeScriptTeam.AngularLanguageService)
+    - [VS 2022](https://marketplace.visualstudio.com/items?itemName=TypeScriptTeam.AngularLanguageService2022)
 
-2. Open a Visual Studio solution containing an Angular Project
+2. Open a Visual Studio solution containing an Angular Project.
 
-3. Open a .ts or html Angular file you should see the following in the Output Window:
+3. Open a `.ts` or HTML Angular file. You should see similar log messages in the Output Window:
 
 ![Output Window](https://uzpxja.sn.files.1drv.com/y4m3m3SBmJRyfKCfXs_KhtEHNFw7eXHwFBMbqVDfTmL6ZbHREv_brszarakz90TN7ilTgh4wmV-rxW_5uZ9fkwOdo1ISMm-oEzENEnx-SSMhE6ehQZnDqDvB8hVkjZfLCBH6dx4HqPaEqLVj1GJCsmdFY2YCbWKv80ON5qKYTB9D3GDmdqXFddN3sKlcC1F5oF-lbE5pnDWWA-Lqe0oD7ZZ7w?width=512&height=164&cropmode=none)
 
 # Local Build
 
 Prerequisites:
-- NuGet - [Direct Installation Link](https://dist.nuget.org/win-x86-commandline/latest/nuget.exe)
-- Visual Studio 2019 with the "Visual Studio extension development" workload selected
-- npm
+- [NuGet](https://dist.nuget.org/win-x86-commandline/latest/nuget.exe)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) with the "Visual Studio extension development" workload selected
+- [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
-Open a Developer Command Prompt for your Visual Studio install (note that there is a Developer Command Prompt for each of your Visual Studio installations). You can find it by searching the start menu. Install the NuGet packages for the solution and run msbuild (npm packages for typescript and the angular language service plugin will be installed automatically):
+Open a Developer Command Prompt for your Visual Studio installation (you can find it in Tools -> Command Line -> Developer Command Prompt). Next install the NuGet packages for the solution and run `msbuild` (this will also install the `npm` packages automatically):
 
 ```
 > nuget restore
