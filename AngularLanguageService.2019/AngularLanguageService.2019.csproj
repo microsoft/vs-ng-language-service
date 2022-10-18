@@ -81,7 +81,7 @@
     <!-- WebTools dependencies for shimming the Angular completions -->
     <PackageReference Include="Microsoft.WebTools.Languages.Html.Editor" Version="16.10.513" />
     <!-- Some dependencies indirectly depend on older versions of Newtonsoft.Json so we explicitly set it here. -->
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.9.1050">
