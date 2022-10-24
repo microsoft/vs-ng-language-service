@@ -23,7 +23,7 @@ namespace AngularLanguageService.LanguageServer
         {
             this.languageClient = languageClient;
         }
-
+        
         #region IHtmlCompletionListProvider implementation
         IList<HtmlCompletion> IHtmlCompletionListProvider.GetEntries(HtmlCompletionContext context)
         {
@@ -49,14 +49,13 @@ namespace AngularLanguageService.LanguageServer
             return completions;
         }
         #endregion
-
         private Task<CompletionItem[]> GetAngularCompletionsAsync(HtmlCompletionContext context)
         {
             ITextView textView = context.Session.TextView;
             int position = textView.Caret.Position.BufferPosition.Position;
             context.Element.Root.TextProvider.GetLineAndColumnFromPosition(position, out int line, out int column);
 
-            var uri = new Uri(context!.Document!.Url.AbsolutePath);
+            var uri = new Uri(context.Document.Url.AbsolutePath);
             var completionParams = new CompletionParams
             {
                 TextDocument = new TextDocumentIdentifier { Uri = uri },

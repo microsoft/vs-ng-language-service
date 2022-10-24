@@ -78,17 +78,16 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <!-- LSP dependencies -->
-    <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="17.2.2105" />
-    <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Protocol" Version="17.3.2017" />
+    <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="17.0.5158" />
+    <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Protocol" Version="17.0.5133" />
     <!-- WebTools dependencies for shimming the Angular completions -->
-    <PackageReference Include="Microsoft.WebTools.Languages.Html.Editor" Version="17.1.349" />
-    <!-- For resolving NuGet conflicts -->
-    <PackageReference Include="Microsoft.VisualStudio.Shell.Design" Version="17.*" ExcludeAssets="All" />
+    <PackageReference Include="Microsoft.WebTools.Languages.Html.Editor" Version="17.0.633" />
     <!-- Some dependencies indirectly depend on older versions of Newtonsoft.Json so we explicitly set it here. -->
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.63" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.3.2088">
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.0.1597">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
