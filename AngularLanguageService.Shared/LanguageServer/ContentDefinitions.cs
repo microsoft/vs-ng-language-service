@@ -7,6 +7,7 @@ namespace AngularLanguageService.LanguageServer
     internal static class ContentDefinitions
     {
         internal const string TypeScriptContentTypeName = "TypeScript";
+        internal const string HtmlDelegationContentTypeName = "html-delegation";
 
         internal const string AngularComponentContentTypeName = "angularcomponent";
         internal const string AngularComponentContentTypeExtension = ".component.html";
