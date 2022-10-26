@@ -9,8 +9,6 @@
     <Import_RootNamespace>AngularLanguageService.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\CompletionProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\ContentDefinitions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\MiddleLayer.cs" />
   </ItemGroup>
 </Project>

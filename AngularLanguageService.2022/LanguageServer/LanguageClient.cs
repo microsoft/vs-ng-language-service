@@ -7,10 +7,8 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.LanguageServer.Client;
-using Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Threading;
 using Microsoft.VisualStudio.Utilities;
-using StreamJsonRpc;
 
 namespace AngularLanguageService.LanguageServer
 {
@@ -18,20 +16,11 @@ namespace AngularLanguageService.LanguageServer
     [Export(AngularLanguageClientName, typeof(ILanguageClient))]
     [ContentType(ContentDefinitions.AngularComponentContentTypeName)]
     [ContentType(ContentDefinitions.TypeScriptContentTypeName)]
-    internal sealed class LanguageClient : ILanguageClient, ILanguageClientCustomMessage2
+    internal sealed class LanguageClient : ILanguageClient
     {
         internal const string AngularLanguageClientName = "Angular Language Service Extension";
 
         private static readonly string[] ConfigurationFiles = new string[] { "**/tsconfig.json" };
-
-        private readonly MiddleLayer middleLayer;
-        private JsonRpc customMessageRpc;
-
-        [ImportingConstructor]
-        internal LanguageClient(MiddleLayer middleLayer)
-        {
-            this.middleLayer = middleLayer;
-        }
 
         #region ILanguageClient implementation
         public event AsyncEventHandler<EventArgs> /*ILanguageClient*/ StartAsync;
@@ -91,29 +80,5 @@ namespace AngularLanguageService.LanguageServer
             return Task.FromResult(failureContext);
         }
         #endregion
-
-        #region ILanguageClientCustomMessage2 implementation
-        object ILanguageClientCustomMessage2.MiddleLayer => middleLayer;
-
-        object ILanguageClientCustomMessage2.CustomMessageTarget => null;
-
-        Task ILanguageClientCustomMessage2.AttachForCustomMessageAsync(JsonRpc rpc)
-        {
-            customMessageRpc = rpc;
-            return Task.CompletedTask;
-        }
-        #endregion
-
-        internal async Task<CompletionItem[]> GetAngularCompletionsAsync(CompletionParams completionParams)
-        {
-            if (customMessageRpc is not null && await customMessageRpc.InvokeWithParameterObjectAsync<CompletionItem[]>(Methods.TextDocumentCompletionName, completionParams) is CompletionItem[] completions)
-            {
-                return completions;
-            }
-            else
-            {
-                return Array.Empty<CompletionItem>();
-            }
-        }
     }
 }
