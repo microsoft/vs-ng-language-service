@@ -7,6 +7,11 @@ using Newtonsoft.Json.Linq;
 
 namespace AngularLanguageService.LanguageServer
 {
+    /// <summary>
+    /// <see cref="ILanguageClientMiddleLayer"/> of the VS 2019 Angular Language Service extension, whose main
+    /// purpose is blocking the <see cref="Methods.TextDocumentCompletion">completion LSP request</see> so that
+    /// we can use the WebTools' shim instead.
+    /// </summary>
     [Export]
     internal sealed class MiddleLayer : ILanguageClientMiddleLayer
     {

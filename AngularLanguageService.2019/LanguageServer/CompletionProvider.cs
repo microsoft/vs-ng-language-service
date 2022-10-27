@@ -13,6 +13,10 @@ using Microsoft.WebTools.Languages.Html.Editor.Completion.Def;
 
 namespace AngularLanguageService.LanguageServer
 {
+    /// <summary>
+    /// <see cref="IHtmlCompletionListProvider"/> for adding Angular completions to <c>.component.html</c> files
+    /// (without losing the built-in HTML completions).
+    /// </summary>
     [HtmlCompletionProvider("Children", "*")]
     [ContentType(AngularConstants.AngularComponentContentTypeName)]
     internal sealed class CompletionProvider : IHtmlCompletionListProvider

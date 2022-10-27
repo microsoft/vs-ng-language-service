@@ -13,6 +13,9 @@ using Microsoft.VisualStudio.Utilities;
 
 namespace AngularLanguageService.LanguageServer
 {
+    /// <summary>
+    /// <see cref="ILanguageClient"/> of the VS 2022 Angular Language Service extension.
+    /// </summary>
     [Export(typeof(ILanguageClient))]
     [Export(AngularLanguageClientName, typeof(ILanguageClient))]
     [ContentType(AngularConstants.TypeScriptContentTypeName)]

@@ -5,6 +5,9 @@ using Microsoft.WebTools.Languages.Shared.ContentTypes;
 
 namespace AngularLanguageService.Shared.LanguageServer
 {
+    /// <summary>
+    /// Content type definitions of <c>.component.html</c> Angular files.
+    /// </summary>
     internal static class AngularComponentContentTypeDefinitions
     {
 #pragma warning disable CS0649 // Field 'field' is never assigned to, and will always have its default value null.

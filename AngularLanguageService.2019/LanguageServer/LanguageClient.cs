@@ -15,6 +15,14 @@ using StreamJsonRpc;
 
 namespace AngularLanguageService.LanguageServer
 {
+    /// <summary>
+    /// <see cref="ILanguageClient"/> of the VS 2019 Angular Language Service extension.
+    /// </summary>
+    /// <remarks>
+    /// This client exposes <see cref="GetAngularCompletionsAsync(CompletionParams)"/> for obtaining
+    /// completions from the Angular server and returning them in <see cref="CompletionProvider"/> instead
+    /// of using LSP.
+    /// </remarks>
     [Export(typeof(ILanguageClient))]
     [Export(AngularLanguageClientName, typeof(ILanguageClient))]
     [ContentType(AngularConstants.TypeScriptContentTypeName)]
