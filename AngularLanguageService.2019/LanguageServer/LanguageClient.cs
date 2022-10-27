@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using AngularLanguageService.Shared.LanguageServer;
 using Microsoft.VisualStudio.LanguageServer.Client;
 using Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Threading;
@@ -16,8 +17,8 @@ namespace AngularLanguageService.LanguageServer
 {
     [Export(typeof(ILanguageClient))]
     [Export(AngularLanguageClientName, typeof(ILanguageClient))]
-    [ContentType(ContentDefinitions.AngularComponentContentTypeName)]
-    [ContentType(ContentDefinitions.TypeScriptContentTypeName)]
+    [ContentType(AngularConstants.TypeScriptContentTypeName)]
+    [ContentType(AngularConstants.AngularComponentContentTypeName)]
     internal sealed class LanguageClient : ILanguageClient, ILanguageClientCustomMessage2
     {
         internal const string AngularLanguageClientName = "Angular Language Service Extension";

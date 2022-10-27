@@ -53,6 +53,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="LanguageServer\AngularComponentToContentTypeProvider.cs" />
     <Compile Include="LanguageServer\LanguageClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -81,6 +82,8 @@
     <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="17.0.5158" />
     <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Protocol" Version="17.0.5133" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.63" />
+    <!-- For accessing WebTools' type definitions -->
+    <PackageReference Include="Microsoft.WebTools.Languages.Html.Editor" Version="17.0.633" />
     <!-- Some dependencies indirectly depend on older versions of Newtonsoft.Json so we explicitly set it here. -->
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
