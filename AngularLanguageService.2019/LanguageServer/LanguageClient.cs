@@ -33,14 +33,14 @@ namespace AngularLanguageService.LanguageServer
 
         private static readonly string[] ConfigurationFiles = new string[] { "**/tsconfig.json" };
 
-        private readonly MiddleLayer middleLayer;
+        private readonly AggregatingMiddleLayer aggregatingMiddleLayer;
         private JsonRpc customMessageRpc;
 
         [ImportingConstructor]
         [Obsolete(AngularConstants.ImportingConstructorMessage, error: true)]
-        internal LanguageClient(MiddleLayer middleLayer)
+        internal LanguageClient(AggregatingMiddleLayer aggregatingMiddleLayer)
         {
-            this.middleLayer = middleLayer;
+            this.aggregatingMiddleLayer = aggregatingMiddleLayer;
         }
 
         #region ILanguageClient implementation
@@ -97,7 +97,7 @@ namespace AngularLanguageService.LanguageServer
         #endregion
 
         #region ILanguageClientCustomMessage2 implementation
-        object ILanguageClientCustomMessage2.MiddleLayer => middleLayer;
+        object ILanguageClientCustomMessage2.MiddleLayer => aggregatingMiddleLayer;
 
         object ILanguageClientCustomMessage2.CustomMessageTarget => null;
 

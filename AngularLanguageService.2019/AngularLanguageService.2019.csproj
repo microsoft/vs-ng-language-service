@@ -55,7 +55,7 @@
     <Compile Include="LanguageServer\AngularComponentExtensionToContentTypeDefinition.cs" />
     <Compile Include="LanguageServer\CompletionProvider.cs" />
     <Compile Include="LanguageServer\LanguageClient.cs" />
-    <Compile Include="LanguageServer\MiddleLayer.cs" />
+    <Compile Include="LanguageServer\NoopCompletionMiddleLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
