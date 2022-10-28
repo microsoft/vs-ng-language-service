@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
+using AngularLanguageService.Shared.LanguageServer;
 using Microsoft.VisualStudio.LanguageServer.Client;
 using Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Shell;
@@ -12,8 +13,12 @@ using Microsoft.WebTools.Languages.Html.Editor.Completion.Def;
 
 namespace AngularLanguageService.LanguageServer
 {
+    /// <summary>
+    /// <see cref="IHtmlCompletionListProvider"/> for adding Angular completions to <c>.component.html</c> files
+    /// (without losing the built-in HTML completions).
+    /// </summary>
     [HtmlCompletionProvider("Children", "*")]
-    [ContentType(ContentDefinitions.AngularComponentContentTypeName)]
+    [ContentType(AngularConstants.AngularComponentContentTypeName)]
     internal sealed class CompletionProvider : IHtmlCompletionListProvider
     {
         private readonly LanguageClient languageClient;
@@ -23,7 +28,7 @@ namespace AngularLanguageService.LanguageServer
         {
             this.languageClient = languageClient;
         }
-        
+
         #region IHtmlCompletionListProvider implementation
         IList<HtmlCompletion> IHtmlCompletionListProvider.GetEntries(HtmlCompletionContext context)
         {
@@ -49,6 +54,7 @@ namespace AngularLanguageService.LanguageServer
             return completions;
         }
         #endregion
+
         private Task<CompletionItem[]> GetAngularCompletionsAsync(HtmlCompletionContext context)
         {
             ITextView textView = context.Session.TextView;

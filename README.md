@@ -6,7 +6,7 @@ This is an extension made to bring in the Angular Language Service to Angular te
 
 ## Features
 
-* Completions List
+* Angular completions in `.component.html` and TypeScript files. Note that completions inside `{{ }}` are only supported in VS2022.
 * AOT Diagnostic messages
 * Quick Info
 

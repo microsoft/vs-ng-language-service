@@ -9,6 +9,9 @@
 ### 1.0.3
 - Fix [#41](https://github.com/microsoft/vs-ng-language-service/issues/41#issue-1412236254).
 
+### 1.1.0
+- Add completions support inside inline templates (i.e.: `{{ }}`).
+
 # Angular Language Service for VS 2019
 
 ### 1.3.1
