@@ -19,7 +19,7 @@ namespace AngularLanguageService.LanguageServer
     [Export(typeof(ILanguageClient))]
     [Export(AngularLanguageClientName, typeof(ILanguageClient))]
     [ContentType(AngularConstants.TypeScriptContentTypeName)]
-    [ContentType(AngularConstants.AngularComponentDelegationContentTypeName)]
+    [ContentType(AngularConstants.AngularComponentContentTypeName)]
     internal sealed class LanguageClient : ILanguageClient
     {
         internal const string AngularLanguageClientName = "Angular Language Service Extension";

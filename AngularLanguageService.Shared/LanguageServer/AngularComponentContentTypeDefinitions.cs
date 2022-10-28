@@ -13,14 +13,12 @@ namespace AngularLanguageService.Shared.LanguageServer
 #pragma warning disable CS0649 // Field 'field' is never assigned to, and will always have its default value null.
         [Export]
         [Name(AngularConstants.AngularComponentContentTypeName)]
+#if VS2019
         [BaseDefinition(HtmlContentTypeDefinition.HtmlContentType)]
+#elif VS2022
+        [BaseDefinition(HtmlContentTypeDefinition.HtmlDelegationContentType)]
+#endif
         [BaseDefinition(CodeRemoteContentDefinition.CodeRemoteContentTypeName)]
         internal static ContentTypeDefinition AngularComponentContentType;
-
-        [Export]
-        [Name(AngularConstants.AngularComponentDelegationContentTypeName)]
-        [BaseDefinition(HtmlContentTypeDefinition.HtmlDelegationContentType)]
-        [BaseDefinition(CodeRemoteContentDefinition.CodeRemoteContentTypeName)]
-        internal static ContentTypeDefinition AngularComponentDelegationContentType;
     }
 }

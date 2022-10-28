@@ -29,7 +29,7 @@ namespace AngularLanguageService.LanguageServer
 
         bool IFilePathToContentTypeProvider.TryGetContentTypeForFilePath(string filePath, out IContentType contentType)
         {
-            contentType = this.contentTypeRegistryService.GetContentType(AngularConstants.AngularComponentDelegationContentTypeName);
+            contentType = this.contentTypeRegistryService.GetContentType(AngularConstants.AngularComponentContentTypeName);
             return true;
         }
     }
