@@ -37,6 +37,7 @@ namespace AngularLanguageService.LanguageServer
         private JsonRpc customMessageRpc;
 
         [ImportingConstructor]
+        [Obsolete(AngularConstants.ImportingConstructorMessage, error: true)]
         internal LanguageClient(MiddleLayer middleLayer)
         {
             this.middleLayer = middleLayer;

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Composition;
+﻿using System;
+using System.ComponentModel.Composition;
 using AngularLanguageService.Shared.LanguageServer;
 using Microsoft.VisualStudio.Utilities;
 using Microsoft.WebTools.Languages.Shared.ContentTypes;
@@ -22,6 +23,7 @@ namespace AngularLanguageService.LanguageServer
         private readonly IContentTypeRegistryService contentTypeRegistryService;
 
         [ImportingConstructor]
+        [Obsolete(AngularConstants.ImportingConstructorMessage, error: true)]
         public AngularComponentToContentTypeProvider(IContentTypeRegistryService contentTypeRegistryService)
         {
             this.contentTypeRegistryService = contentTypeRegistryService;
