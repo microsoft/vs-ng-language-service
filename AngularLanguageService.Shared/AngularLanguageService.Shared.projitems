@@ -9,7 +9,9 @@
     <Import_RootNamespace>AngularLanguageService.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\AggregatingMiddleLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\AngularComponentContentTypeDefinitions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\AngularConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\MiddleLayerHandler.cs" />
   </ItemGroup>
 </Project>
