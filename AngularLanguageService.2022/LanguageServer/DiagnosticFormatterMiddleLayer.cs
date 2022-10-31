@@ -23,7 +23,7 @@ namespace AngularLanguageService.LanguageServer
             foreach (Diagnostic diagnostic in diagnosticParams.Diagnostics)
             {
                 // Add an Angular code prefix
-                diagnostic.Code = "(NG) " + diagnostic.Code?.Value;
+                diagnostic.Code = $"ngtsc({diagnostic.Code?.Value})";
 
                 // The Angular parser adds location information to errors (see https://github.com/angular/angular/blob/37ba6104498202b671f5a5a6bbfacc4df501788b/packages/compiler/src/expression_parser/ast.ts#L12-L18),
                 // resulting in redundant messages in the error list.
