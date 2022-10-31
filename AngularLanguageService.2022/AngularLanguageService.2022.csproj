@@ -54,7 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="LanguageServer\AngularComponentToContentTypeProvider.cs" />
-    <Compile Include="LanguageServer\LanguageClient.cs" />
+    <Compile Include="LanguageServer\DiagnosticFormatterMiddleLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

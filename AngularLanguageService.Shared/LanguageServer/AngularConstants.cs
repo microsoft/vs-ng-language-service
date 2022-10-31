@@ -9,5 +9,7 @@
 
         internal const string AngularComponentContentTypeName = "angularcomponent";
         internal const string AngularComponentContentTypeExtension = ".component.html";
+
+        internal const string ImportingConstructorMessage = "This exported object must be obtained through the MEF export provider.";
     }
 }

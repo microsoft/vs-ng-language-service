@@ -24,6 +24,7 @@ namespace AngularLanguageService.LanguageServer
         private readonly LanguageClient languageClient;
 
         [ImportingConstructor]
+        [Obsolete(AngularConstants.ImportingConstructorMessage, error: true)]
         internal CompletionProvider([Import(LanguageClient.AngularLanguageClientName, typeof(ILanguageClient))] LanguageClient languageClient)
         {
             this.languageClient = languageClient;

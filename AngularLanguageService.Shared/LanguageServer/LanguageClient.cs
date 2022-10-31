@@ -8,21 +8,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using AngularLanguageService.Shared.LanguageServer;
 using Microsoft.VisualStudio.LanguageServer.Client;
-using Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Threading;
 using Microsoft.VisualStudio.Utilities;
 using StreamJsonRpc;
+#if VS2019
+using Microsoft.VisualStudio.LanguageServer.Protocol;
+#endif
 
 namespace AngularLanguageService.LanguageServer
 {
     /// <summary>
-    /// <see cref="ILanguageClient"/> of the VS 2019 Angular Language Service extension.
+    /// <see cref="ILanguageClient"/> of the VS Angular Language Service extension.
     /// </summary>
-    /// <remarks>
-    /// This client exposes <see cref="GetAngularCompletionsAsync(CompletionParams)"/> for obtaining
-    /// completions from the Angular server and returning them in <see cref="CompletionProvider"/> instead
-    /// of using LSP.
-    /// </remarks>
     [Export(typeof(ILanguageClient))]
     [Export(AngularLanguageClientName, typeof(ILanguageClient))]
     [ContentType(AngularConstants.TypeScriptContentTypeName)]
@@ -33,13 +30,16 @@ namespace AngularLanguageService.LanguageServer
 
         private static readonly string[] ConfigurationFiles = new string[] { "**/tsconfig.json" };
 
-        private readonly MiddleLayer middleLayer;
+        private readonly AggregatingMiddleLayer aggregatingMiddleLayer;
+#if VS2019
         private JsonRpc customMessageRpc;
+#endif
 
         [ImportingConstructor]
-        internal LanguageClient(MiddleLayer middleLayer)
+        [Obsolete(AngularConstants.ImportingConstructorMessage, error: true)]
+        internal LanguageClient(AggregatingMiddleLayer aggregatingMiddleLayer)
         {
-            this.middleLayer = middleLayer;
+            this.aggregatingMiddleLayer = aggregatingMiddleLayer;
         }
 
         #region ILanguageClient implementation
@@ -56,6 +56,10 @@ namespace AngularLanguageService.LanguageServer
         object ILanguageClient.InitializationOptions => null;
 
         IEnumerable<string> ILanguageClient.FilesToWatch => ConfigurationFiles;
+
+#if VS2022
+        bool ILanguageClient.ShowNotificationOnInitializeFailed => true;
+#endif
 
         Task<Connection> ILanguageClient.ActivateAsync(CancellationToken token)
         {
@@ -92,21 +96,32 @@ namespace AngularLanguageService.LanguageServer
 
         Task ILanguageClient.OnServerInitializedAsync() => Task.CompletedTask;
 
+#if VS2019
         Task ILanguageClient.OnServerInitializeFailedAsync(Exception exception) => Task.CompletedTask;
-        #endregion
+#elif VS2022
+        Task<InitializationFailureContext> ILanguageClient.OnServerInitializeFailedAsync(ILanguageClientInitializationInfo initializationState)
+        {
+            var failureContext = new InitializationFailureContext { FailureMessage = initializationState.InitializationException.Message };
+            return Task.FromResult(failureContext);
+        }
+#endif
+#endregion
 
         #region ILanguageClientCustomMessage2 implementation
-        object ILanguageClientCustomMessage2.MiddleLayer => middleLayer;
+        object ILanguageClientCustomMessage2.MiddleLayer => this.aggregatingMiddleLayer;
 
         object ILanguageClientCustomMessage2.CustomMessageTarget => null;
 
         Task ILanguageClientCustomMessage2.AttachForCustomMessageAsync(JsonRpc rpc)
         {
+#if VS2019
             customMessageRpc = rpc;
+#endif
             return Task.CompletedTask;
         }
         #endregion
 
+#if VS2019
         internal async Task<CompletionItem[]> GetAngularCompletionsAsync(CompletionParams completionParams)
         {
             if (customMessageRpc is not null && await customMessageRpc.InvokeWithParameterObjectAsync<CompletionItem[]>(Methods.TextDocumentCompletionName, completionParams) is CompletionItem[] completions)
@@ -118,5 +133,6 @@ namespace AngularLanguageService.LanguageServer
                 return Array.Empty<CompletionItem>();
             }
         }
+#endif
     }
 }
