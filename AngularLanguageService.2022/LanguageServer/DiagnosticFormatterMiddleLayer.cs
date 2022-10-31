@@ -18,6 +18,7 @@ namespace AngularLanguageService.LanguageServer
 
         public override Task HandleNotificationAsync(string methodName, JToken methodParam, Func<JToken, Task> sendNotification)
         {
+            // TODO: Format diagnostics (see #47).
             return base.HandleNotificationAsync(methodName, methodParam, sendNotification);
         }
     }
