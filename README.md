@@ -4,6 +4,8 @@
 
 This is an extension made to bring in the Angular Language Service to Angular templates being created in Visual Studio.
 
+_[Angular Logo](https://angular.io/presskit) is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)._
+
 ## Features
 
 * Angular completions in `.component.html` and TypeScript files. Note that completions inside `{{ }}` are only supported in VS2022.
@@ -18,27 +20,13 @@ This is an extension made to bring in the Angular Language Service to Angular te
 
 2. Open a Visual Studio solution containing an Angular Project.
 
-3. Open a `.ts` or HTML Angular file. You should see similar log messages in the Output Window:
+3. Open a `.ts` or HTML Angular file (with a `.component.html` extension). You should see similar log messages in the Output Window:
 
 ![Output Window](https://uzpxja.sn.files.1drv.com/y4m3m3SBmJRyfKCfXs_KhtEHNFw7eXHwFBMbqVDfTmL6ZbHREv_brszarakz90TN7ilTgh4wmV-rxW_5uZ9fkwOdo1ISMm-oEzENEnx-SSMhE6ehQZnDqDvB8hVkjZfLCBH6dx4HqPaEqLVj1GJCsmdFY2YCbWKv80ON5qKYTB9D3GDmdqXFddN3sKlcC1F5oF-lbE5pnDWWA-Lqe0oD7ZZ7w?width=512&height=164&cropmode=none)
 
-# Local Build
-
-Prerequisites:
-- [NuGet](https://dist.nuget.org/win-x86-commandline/latest/nuget.exe)
-- [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) with the "Visual Studio extension development" workload selected
-- [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-
-Open a Developer Command Prompt for your Visual Studio installation (you can find it in Tools -> Command Line -> Developer Command Prompt). Next install the NuGet packages for the solution and run `msbuild` (this will also install the `npm` packages automatically):
-
-```
-> nuget restore
-> msbuild AngularLanguageService.sln
-```
-
 # Contributing
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
+This project welcomes contributions and suggestions. Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
 the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
 
