@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="AngularLS.bf76f463-39ee-4ab1-91be-0f47c4b595ca" Version="1.1.0" Language="en-US" Publisher="Microsoft" />
+        <Identity Id="AngularLS.bf76f463-39ee-4ab1-91be-0f47c4b595ca" Version="1.1.1" Language="en-US" Publisher="Microsoft" />
         <DisplayName>Angular Language Service 2022</DisplayName>
         <Description>Provides the Angular language service to enable editor features for Angular templates.</Description>
         <License>EULA.rtf</License>
