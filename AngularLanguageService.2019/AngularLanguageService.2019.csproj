@@ -86,12 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Signing -->
-    <FilesToSign Include="$(OutDir)\AngularLanguageService.2019.vsix">
-      <Authenticode>VsixSHA2</Authenticode>
-    </FilesToSign>
     <FilesToSign Include="$(OutDir)\AngularLanguageService.2019.dll">
       <Authenticode>Microsoft400</Authenticode>
       <StrongName>StrongName</StrongName>
+    </FilesToSign>
+    <FilesToSign Include="$(OutDir)\AngularLanguageService.2019.vsix">
+      <Authenticode>VsixSHA2</Authenticode>
     </FilesToSign>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
