@@ -4,12 +4,6 @@
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
-  <PropertyGroup>
-    <!-- Signing configuration -->
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>FinalPublicKey.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>true</DelaySign>
-  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -58,7 +52,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FinalPublicKey.snk" />
     <None Include="package-lock.json" />
     <None Include="package.json" />
     <None Include="manifest.json" />
@@ -74,9 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <!-- MicroBuild signing -->
-    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="1.0.0">
+    <PackageReference Include="Microsoft.VisualStudio.Internal.MicroBuild.VisualStudio" Version="2.0.65">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <!-- LSP dependencies -->
     <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="16.10.1220" />
@@ -93,9 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Signing -->
-    <FilesToSign Include="$(OutDir)\AngularLanguageService.2019.vsix">
-      <Authenticode>VsixSHA2</Authenticode>
-    </FilesToSign>
     <FilesToSign Include="$(OutDir)\AngularLanguageService.2019.dll">
       <Authenticode>Microsoft400</Authenticode>
       <StrongName>StrongName</StrongName>
