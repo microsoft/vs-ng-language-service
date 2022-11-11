@@ -92,9 +92,6 @@
             <Authenticode>Microsoft400</Authenticode>
             <StrongName>StrongName</StrongName>
         </FilesToSign>
-        <FilesToSign Include="$(OutDir)\AngularLanguageService.2022.vsix">
-            <Authenticode>VsixSHA2</Authenticode>
-        </FilesToSign>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
