@@ -6,9 +6,9 @@ using Microsoft.WebTools.Languages.Shared.ContentTypes;
 namespace AngularLanguageService.Shared.LanguageServer
 {
     /// <summary>
-    /// Content type definitions of <c>.component.html</c> Angular files.
+    /// Content type definition of <c>.component.html</c> Angular files.
     /// </summary>
-    internal static class AngularComponentContentTypeDefinitions
+    internal static class AngularComponentContentTypeDefinition
     {
 #pragma warning disable CS0649 // Field 'field' is never assigned to, and will always have its default value null.
         [Export]
@@ -20,5 +20,6 @@ namespace AngularLanguageService.Shared.LanguageServer
 #endif
         [BaseDefinition(CodeRemoteContentDefinition.CodeRemoteContentTypeName)]
         internal static ContentTypeDefinition AngularComponentContentType;
+#pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value null.
     }
 }

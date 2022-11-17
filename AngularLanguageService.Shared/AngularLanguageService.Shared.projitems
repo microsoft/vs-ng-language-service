@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\AggregatingMiddleLayer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\AngularComponentContentTypeDefinitions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\AngularComponentContentTypeDefinition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\AngularConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\LanguageClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\MiddleLayerHandler.cs" />
