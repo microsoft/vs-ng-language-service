@@ -35,9 +35,7 @@ namespace AngularLanguageService.LanguageServer
         {
             var completions = new List<HtmlCompletion>();
 
-#pragma warning disable VSTHRD104 // Offer async methods
             CompletionItem[] angularCompletions = ThreadHelper.JoinableTaskFactory.Run(async () => await GetAngularCompletionsAsync(context));
-#pragma warning restore VSTHRD104 // Offer async methods
 
             foreach (CompletionItem completion in angularCompletions)
             {
