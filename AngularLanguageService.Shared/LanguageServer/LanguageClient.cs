@@ -11,9 +11,13 @@ using Microsoft.VisualStudio.LanguageServer.Client;
 using Microsoft.VisualStudio.Threading;
 using Microsoft.VisualStudio.Utilities;
 using StreamJsonRpc;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio;
 #if VS2019
 using Microsoft.VisualStudio.LanguageServer.Protocol;
 #endif
+using Task = System.Threading.Tasks.Task;
 
 namespace AngularLanguageService.LanguageServer
 {
@@ -30,6 +34,7 @@ namespace AngularLanguageService.LanguageServer
 
         private static readonly string[] ConfigurationFiles = new string[] { "**/tsconfig.json" };
 
+        private readonly SVsServiceProvider serviceProvider;
         private readonly AggregatingMiddleLayer aggregatingMiddleLayer;
 #if VS2019
         private JsonRpc customMessageRpc;
@@ -37,8 +42,9 @@ namespace AngularLanguageService.LanguageServer
 
         [ImportingConstructor]
         [Obsolete(AngularConstants.ImportingConstructorMessage, error: true)]
-        internal LanguageClient(AggregatingMiddleLayer aggregatingMiddleLayer)
+        internal LanguageClient(SVsServiceProvider serviceProvider, AggregatingMiddleLayer aggregatingMiddleLayer)
         {
+            this.serviceProvider = serviceProvider;
             this.aggregatingMiddleLayer = aggregatingMiddleLayer;
         }
 
@@ -61,35 +67,48 @@ namespace AngularLanguageService.LanguageServer
         bool ILanguageClient.ShowNotificationOnInitializeFailed => true;
 #endif
 
-        Task<Connection> ILanguageClient.ActivateAsync(CancellationToken token)
+        async Task<Connection> ILanguageClient.ActivateAsync(CancellationToken token)
         {
-            string dependenciesPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "node_modules");
+            // Use both the current solution and the extension's bundle as probe locations.
+            string solutionPath = await ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+            {
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+                var solution = this.serviceProvider.GetService<SVsSolution, IVsSolution>();
+                if (solution.GetSolutionInfo(out var solutionPath, out _, out _) == VSConstants.S_OK)
+                {
+                    return solutionPath.TrimSuffix(Path.DirectorySeparatorChar.ToString()) + ",";
+                }
+
+                return string.Empty;
+            });
+            string bundlePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "node_modules");
+            string probePaths = $"{solutionPath}{bundlePath}";
+
             var startInfo = new ProcessStartInfo
             {
-                // TODO: Should we try to find the right node path?
                 FileName = "node.exe",
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 Arguments =
-                    $"\"{Path.Combine(dependenciesPath, "@angular", "language-server", "index.js")}\"" +
+                    $"\"{Path.Combine(bundlePath, "@angular", "language-server", "index.js")}\"" +
                     " --logVerbosity verbose" +
                     " --logToConsole" +
                     " --stdio" +
-                    // TODO: Should we allow users to specify TypeScript location?
-                    $" --tsProbeLocations \"{dependenciesPath}\"" +
-                    $" --ngProbeLocations \"{dependenciesPath}\""
+                    $" --tsProbeLocations \"{probePaths}\"" +
+                    $" --ngProbeLocations \"{probePaths}\""
             };
 
             var process = new Process { StartInfo = startInfo };
 
             if (process.Start())
             {
-                return Task.FromResult(new Connection(process.StandardOutput.BaseStream, process.StandardInput.BaseStream));
+                return new Connection(process.StandardOutput.BaseStream, process.StandardInput.BaseStream);
             }
 
-            return Task.FromResult<Connection>(null);
+            return null;
         }
 
         Task ILanguageClient.OnLoadedAsync() => StartAsync.InvokeAsync(this, EventArgs.Empty);
@@ -105,7 +124,7 @@ namespace AngularLanguageService.LanguageServer
             return Task.FromResult(failureContext);
         }
 #endif
-#endregion
+        #endregion
 
         #region ILanguageClientCustomMessage2 implementation
         object ILanguageClientCustomMessage2.MiddleLayer => this.aggregatingMiddleLayer;
