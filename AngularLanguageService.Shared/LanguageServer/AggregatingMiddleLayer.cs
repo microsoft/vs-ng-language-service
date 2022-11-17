@@ -23,6 +23,7 @@ namespace AngularLanguageService.Shared.LanguageServer
         private readonly IEnumerable<MiddleLayerHandler> middleLayerHandlers;
 
         [ImportingConstructor]
+        [Obsolete(AngularConstants.ImportingConstructorMessage, error: true)]
         public AggregatingMiddleLayer([ImportMany] IEnumerable<MiddleLayerHandler> middleLayerHandlers)
         {
             this.middleLayerHandlers = middleLayerHandlers;
