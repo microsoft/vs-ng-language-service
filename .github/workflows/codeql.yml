@@ -25,9 +25,17 @@ jobs:
       uses: github/codeql-action/init@v2
       with:
         config-file: ./.github/codeql/codeql-configuration.yml
-
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
+# copied from https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+    - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
