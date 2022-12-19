@@ -93,6 +93,7 @@ namespace AngularLanguageService.LanguageServer
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 Arguments =
+                    //"--inspect-brk=9222 " +
                     $"\"{Path.Combine(bundlePath, "@angular", "language-server", "index.js")}\"" +
                     " --logVerbosity verbose" +
                     " --logToConsole" +
