@@ -15,6 +15,9 @@
 ### 1.1.3
 - [#54](https://github.com/microsoft/vs-ng-language-service/pull/54): Include current solution as a probe location for the Angular and TypeScript modules.
 
+### 1.1.5
+- Fix [#60](https://github.com/microsoft/vs-ng-language-service/issues/60).
+
 # Angular Language Service for VS 2019
 
 ### 1.3.1
