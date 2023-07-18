@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "@angular/language-server": "14.2.0",
+        "@angular/language-server": "16.1.4",
         "typescript": "4.8.2"
     }
 }

@@ -18,6 +18,9 @@
 ### 1.1.5
 - Fix [#60](https://github.com/microsoft/vs-ng-language-service/issues/60).
 
+### 1.1.6
+- Fix [#63](https://github.com/microsoft/vs-ng-language-service/issues/63).
+
 # Angular Language Service for VS 2019
 
 ### 1.3.1
