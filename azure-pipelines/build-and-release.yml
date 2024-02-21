@@ -10,6 +10,8 @@ variables:
   value: TypeScript
 - name: BuildConfiguration
   value: Release
+- name: BuildPlatform
+  value: 'any cpu'
 
 name: $(date:yyyyMMdd)$(rev:.r)
 
