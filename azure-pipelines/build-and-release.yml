@@ -9,7 +9,7 @@ variables:
 - name: TeamName
   value: TypeScript
 - name: BuildConfiguration
-  value: Release
+  value: release
 - name: BuildPlatform
   value: 'any cpu'
 
@@ -43,8 +43,10 @@ jobs:
   steps:
   - checkout: self
     fetchTags: false
+    persistCredentials: True
 
   - task: MicroBuildSigningPlugin@4
+    name: MicroBuildSigningPlugin_1
     displayName: Install Signing Plugin
     inputs:
       signType: ${{parameters.SignType}}
