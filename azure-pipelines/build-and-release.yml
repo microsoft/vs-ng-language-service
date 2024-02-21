@@ -1,0 +1,120 @@
+﻿# ✅Variable 'Publish2019VsixToMarketplace' was defined in the Variables tab
+# ✅Variable 'Publish2022VsixToMarketplace' was defined in the Variables tab
+# ✅ Variable 'SignType' was defined in the Variables tab
+# ✅ Variable 'TeamName' was defined in the Variables tab
+
+variables:
+- name: BuildParameters.solution
+  value: '**\*.sln'
+- name: SignType
+  value: Real
+- name: TeamName
+  value: TypeScript
+- name: BuildConfiguration
+  value: Release
+
+name: $(date:yyyyMMdd)$(rev:.r)
+
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/main
+
+parameters:
+- name: Publish2019VsixToMarketplace
+  type: boolean
+  default: false
+- name: Publish2022VsixToMarketplace
+  type: boolean
+  default: false
+
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    name: VSEngSS-MicroBuild2019-1ES
+  steps:
+  - checkout: self
+    fetchTags: false
+
+  - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@2
+    displayName: Install Signing Plugin
+    inputs:
+      signType: $(SignType)
+
+  - task: NuGetToolInstaller@0
+    displayName: Use NuGet 4.4.1
+    inputs:
+      versionSpec: 4.4.1
+
+  - task: NuGetCommand@2
+    displayName: NuGet restore
+    inputs:
+      solution: $(BuildParameters.solution)
+      feedRestore: 91935767-5f32-476b-b8d3-39faa4d6f7ad
+      nugetConfigPath: nuget.config
+
+  - task: VSBuild@1
+    displayName: Build solution **\*.sln
+    inputs:
+      solution: $(BuildParameters.solution)
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+
+  - task: VSTest@2
+    displayName: VsTest - testAssemblies
+    inputs:
+      testAssemblyVer2: >-
+        **\$(BuildConfiguration)\*test*.dll
+
+        !**\obj\**
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+
+  - task: PublishSymbols@2
+    displayName: Publish symbols path
+    continueOnError: True
+    inputs:
+      SearchPattern: '**\bin\**\*.pdb'
+      PublishSymbols: false
+      SymbolServerType: TeamServices
+
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+    condition: succeededOrFailed()
+    inputs:
+      SourceFolder: $(system.defaultworkingdirectory)
+      Contents: '**\bin\$(BuildConfiguration)\**'
+      TargetFolder: $(build.artifactstagingdirectory)
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: drop'
+    condition: succeededOrFailed()
+    inputs:
+      PathtoPublish: $(build.artifactstagingdirectory)
+      TargetPath: '\\my\share\$(Build.DefinitionName)\$(Build.BuildNumber)'
+
+  - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-vs-extension-build-task.PublishVisualStudioExtension@3
+    displayName: Publish VS 2019 Extension
+    # condition: and(succeeded(), eq(variables['Publish2019VsixToMarketplace'], 'true'))
+    condition: ${{parameters.Publish2019VsixToMarketplace}}
+    inputs:
+      connectedServiceName: 0c27eb7e-9441-49b0-ade7-9a7f36f98a51
+      vsixFile: $(system.defaultworkingdirectory)\AngularLanguageService.2019\bin\Release\AngularLanguageService.2019.vsix
+      manifestFile: $(system.defaultworkingdirectory)\AngularLanguageService.2019\manifest.json
+      publisherId: TypeScriptTeam
+
+  - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-vs-extension-build-task.PublishVisualStudioExtension@3
+    displayName: Publish VS 2022 Extension
+    # condition: and(succeeded(), eq(variables['Publish2022VsixToMarketplace'], 'true'))
+    condition: ${{parameters.Publish2022VsixToMarketplace}}
+    inputs:
+      connectedServiceName: 0c27eb7e-9441-49b0-ade7-9a7f36f98a51
+      vsixFile: $(system.defaultworkingdirectory)\AngularLanguageService.2022\bin\Release\AngularLanguageService.2022.vsix
+      manifestFile: $(system.defaultworkingdirectory)\AngularLanguageService.2022\manifest.json
+      publisherId: TypeScriptTeam
+
+  - task: ms-vseng.MicroBuildTasks.521a94ea-9e68-468a-8167-6dcf361ea776.MicroBuildCleanup@1
+    displayName: Send Telemetry
+...
