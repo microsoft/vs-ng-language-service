@@ -1,1 +1,142 @@
-# Placeholder for the real pipeline
+# This is the pipeline for Building and Publishing the VS Angular Plugin to the VS Marketplace.
+# It includes options for Visual Studio 2019 and Visual Studio 2022
+# Link: https://dev.azure.com/devdiv/DevDiv/_build?definitionId=20875
+
+variables:
+- name: BuildParameters.solution
+  value: '**\*.sln'
+- name: TeamName
+  value: TypeScript
+- name: BuildConfiguration
+  value: release
+- name: BuildPlatform
+  value: 'any cpu'
+
+name: $(date:yyyyMMdd)$(rev:.r)
+
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/main
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+
+parameters:
+- name: Publish2019VsixToMarketplace
+  type: boolean
+  default: false
+- name: Publish2022VsixToMarketplace
+  type: boolean
+  default: false
+- name: SignType
+  type: string
+  default: real
+  values:
+  - real
+  - test
+
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool:
+      name: VSEngSS-MicroBuild2019-1ES
+    customBuildTags:
+    - ES365AIMigrationTooling
+    stages:
+    - stage: stage
+      jobs:
+      - job: Job_1
+        displayName: Build and Publish
+        templateContext:
+          outputs:
+          - output: pipelineArtifact
+            displayName: 'Publish Artifact: drop'
+            condition: succeededOrFailed()
+            targetPath: $(build.artifactstagingdirectory)
+
+        steps:
+        - checkout: self
+          fetchTags: false
+          persistCredentials: True
+
+        - task: MicroBuildSigningPlugin@4
+          name: MicroBuildSigningPlugin_1
+          displayName: Install Signing Plugin
+          inputs:
+            signType: ${{parameters.SignType}}
+
+        - task: NuGetToolInstaller@0
+          displayName: Use NuGet 4.4.1
+          inputs:
+            versionSpec: 4.4.1
+
+        - task: NuGetCommand@2
+          displayName: NuGet restore
+          inputs:
+            solution: $(BuildParameters.solution)
+            feedRestore: 91935767-5f32-476b-b8d3-39faa4d6f7ad
+            nugetConfigPath: nuget.config
+
+        - task: VSBuild@1
+          displayName: Build solution **\*.sln
+          inputs:
+            solution: $(BuildParameters.solution)
+            platform: $(BuildPlatform)
+            configuration: $(BuildConfiguration)
+
+        - task: VSTest@2
+          displayName: VsTest - testAssemblies
+          inputs:
+            testAssemblyVer2: >-
+              **\$(BuildConfiguration)\*test*.dll
+
+              !**\obj\**
+            platform: $(BuildPlatform)
+            configuration: $(BuildConfiguration)
+
+        - task: PublishSymbols@2
+          displayName: Publish symbols path
+          continueOnError: True
+          inputs:
+            SearchPattern: '**\bin\**\*.pdb'
+            PublishSymbols: false
+            SymbolServerType: TeamServices
+
+        - task: CopyFiles@2
+          displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+          condition: succeededOrFailed()
+          inputs:
+            SourceFolder: $(system.defaultworkingdirectory)
+            Contents: '**\bin\$(BuildConfiguration)\**'
+            TargetFolder: $(build.artifactstagingdirectory)
+
+        - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-vs-extension-build-task.PublishVisualStudioExtension@3
+          displayName: Publish VS 2019 Extension
+          condition: ${{parameters.Publish2019VsixToMarketplace}}
+          inputs:
+            connectedServiceName: 0c27eb7e-9441-49b0-ade7-9a7f36f98a51
+            vsixFile: $(system.defaultworkingdirectory)\AngularLanguageService.2019\bin\Release\AngularLanguageService.2019.vsix
+            manifestFile: $(system.defaultworkingdirectory)\AngularLanguageService.2019\manifest.json
+            publisherId: TypeScriptTeam
+
+        - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-vs-extension-build-task.PublishVisualStudioExtension@3
+          displayName: Publish VS 2022 Extension
+          condition: ${{parameters.Publish2022VsixToMarketplace}}
+          inputs:
+            connectedServiceName: 0c27eb7e-9441-49b0-ade7-9a7f36f98a51
+            vsixFile: $(system.defaultworkingdirectory)\AngularLanguageService.2022\bin\Release\AngularLanguageService.2022.vsix
+            manifestFile: $(system.defaultworkingdirectory)\AngularLanguageService.2022\manifest.json
+            publisherId: TypeScriptTeam
+
+        - task: ms-vseng.MicroBuildTasks.521a94ea-9e68-468a-8167-6dcf361ea776.MicroBuildCleanup@1
+          displayName: Send Telemetry
+
+        - task: DeleteFiles@1
+          displayName: Remove MicroBuild from artifact's folder
+          inputs:
+            SourceFolder: $(Build.ArtifactStagingDirectory)/MicroBuild
+            Contents: '*'
+            RemoveSourceFolder: true
