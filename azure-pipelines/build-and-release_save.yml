@@ -1,7 +1,6 @@
-﻿# ✅Variable 'Publish2019VsixToMarketplace' was defined in the Variables tab
-# ✅Variable 'Publish2022VsixToMarketplace' was defined in the Variables tab
-# ✅ Variable 'SignType' was defined in the Variables tab
-# ✅ Variable 'TeamName' was defined in the Variables tab
+﻿# This is the pipeline for Building and Publishing the VS Angular Plugin to the VS Marketplace.
+# It includes options for Visual Studio 2019 and Visual Studio 2022
+# Link: https://dev.azure.com/devdiv/DevDiv/_build?definitionId=20875
 
 variables:
 - name: BuildParameters.solution
@@ -37,7 +36,7 @@ parameters:
 
 jobs:
 - job: Job_1
-  displayName: Agent job 1
+  displayName: Build and Publish
   pool:
     name: VSEngSS-MicroBuild2019-1ES
   steps:
