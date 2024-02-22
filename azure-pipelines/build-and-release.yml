@@ -1,8 +1,8 @@
-﻿# ✅Variable 'Publish2019VsixToMarketplace' was defined in the Variables tab
-# ✅Variable 'Publish2022VsixToMarketplace' was defined in the Variables tab
-# ✅ Variable 'SignType' was defined in the Variables tab
-# ✅ Variable 'TeamName' was defined in the Variables tab
-
+# This Yaml Document has been converted by ESAI Yaml Pipeline Conversion Tool.
+# Please make sure to check all the converted content, it is your team's responsibility to make sure that the pipeline is still valid and functions as expected.
+# This pipeline will be extended to the OneESPT template
+# If you are not using the E+D shared hosted pool with windows-2022, replace the pool section with your hosted pool, os, and image name. If you are using a Linux image, you must specify an additional windows image for SDL: https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/1es-pipeline-templates/features/sdlanalysis/overview#how-to-specify-a-windows-pool-for-the-sdl-source-analysis-stage
+# The Task 'PublishBuildArtifacts@1' has been converted to an output named 'Publish Artifact: drop' in the templateContext section.
 variables:
 - name: BuildParameters.solution
   value: '**\*.sln'
@@ -20,6 +20,10 @@ resources:
   - repository: self
     type: git
     ref: refs/heads/main
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
 
 parameters:
 - name: Publish2019VsixToMarketplace
@@ -35,93 +39,105 @@ parameters:
   - real
   - test
 
-jobs:
-- job: Job_1
-  displayName: Agent job 1
-  pool:
-    name: VSEngSS-MicroBuild2019-1ES
-  steps:
-  - checkout: self
-    fetchTags: false
-    persistCredentials: True
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool:
+      name: VSEngSS-MicroBuild2019-1ES
+    customBuildTags:
+    - ES365AIMigrationTooling
+    stages:
+    - stage: stage
+      jobs:
+      - job: Job_1
+        displayName: Agent job 1
+        templateContext:
+          outputs:
+          - output: pipelineArtifact
+            displayName: 'Publish Artifact: drop'
+            condition: succeededOrFailed()
+            targetPath: $(build.artifactstagingdirectory)
 
-  - task: MicroBuildSigningPlugin@4
-    name: MicroBuildSigningPlugin_1
-    displayName: Install Signing Plugin
-    inputs:
-      signType: ${{parameters.SignType}}
+        steps:
+        - checkout: self
+          fetchTags: false
+          persistCredentials: True
 
-  - task: NuGetToolInstaller@0
-    displayName: Use NuGet 4.4.1
-    inputs:
-      versionSpec: 4.4.1
+        - task: MicroBuildSigningPlugin@4
+          name: MicroBuildSigningPlugin_1
+          displayName: Install Signing Plugin
+          inputs:
+            signType: ${{parameters.SignType}}
 
-  - task: NuGetCommand@2
-    displayName: NuGet restore
-    inputs:
-      solution: $(BuildParameters.solution)
-      feedRestore: 91935767-5f32-476b-b8d3-39faa4d6f7ad
-      nugetConfigPath: nuget.config
+        - task: NuGetToolInstaller@0
+          displayName: Use NuGet 4.4.1
+          inputs:
+            versionSpec: 4.4.1
 
-  - task: VSBuild@1
-    displayName: Build solution **\*.sln
-    inputs:
-      solution: $(BuildParameters.solution)
-      platform: $(BuildPlatform)
-      configuration: $(BuildConfiguration)
+        - task: NuGetCommand@2
+          displayName: NuGet restore
+          inputs:
+            solution: $(BuildParameters.solution)
+            feedRestore: 91935767-5f32-476b-b8d3-39faa4d6f7ad
+            nugetConfigPath: nuget.config
 
-  - task: VSTest@2
-    displayName: VsTest - testAssemblies
-    inputs:
-      testAssemblyVer2: >-
-        **\$(BuildConfiguration)\*test*.dll
+        - task: VSBuild@1
+          displayName: Build solution **\*.sln
+          inputs:
+            solution: $(BuildParameters.solution)
+            platform: $(BuildPlatform)
+            configuration: $(BuildConfiguration)
 
-        !**\obj\**
-      platform: $(BuildPlatform)
-      configuration: $(BuildConfiguration)
+        - task: VSTest@2
+          displayName: VsTest - testAssemblies
+          inputs:
+            testAssemblyVer2: >-
+              **\$(BuildConfiguration)\*test*.dll
 
-  - task: PublishSymbols@2
-    displayName: Publish symbols path
-    continueOnError: True
-    inputs:
-      SearchPattern: '**\bin\**\*.pdb'
-      PublishSymbols: false
-      SymbolServerType: TeamServices
+              !**\obj\**
+            platform: $(BuildPlatform)
+            configuration: $(BuildConfiguration)
 
-  - task: CopyFiles@2
-    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-    condition: succeededOrFailed()
-    inputs:
-      SourceFolder: $(system.defaultworkingdirectory)
-      Contents: '**\bin\$(BuildConfiguration)\**'
-      TargetFolder: $(build.artifactstagingdirectory)
+        - task: PublishSymbols@2
+          displayName: Publish symbols path
+          continueOnError: True
+          inputs:
+            SearchPattern: '**\bin\**\*.pdb'
+            PublishSymbols: false
+            SymbolServerType: TeamServices
 
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: drop'
-    condition: succeededOrFailed()
-    inputs:
-      PathtoPublish: $(build.artifactstagingdirectory)
-      TargetPath: '\\my\share\$(Build.DefinitionName)\$(Build.BuildNumber)'
+        - task: CopyFiles@2
+          displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+          condition: succeededOrFailed()
+          inputs:
+            SourceFolder: $(system.defaultworkingdirectory)
+            Contents: '**\bin\$(BuildConfiguration)\**'
+            TargetFolder: $(build.artifactstagingdirectory)
 
-  - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-vs-extension-build-task.PublishVisualStudioExtension@3
-    displayName: Publish VS 2019 Extension
-    # condition: and(succeeded(), eq(variables['Publish2019VsixToMarketplace'], 'true'))
-    condition: ${{parameters.Publish2019VsixToMarketplace}}
-    inputs:
-      connectedServiceName: 0c27eb7e-9441-49b0-ade7-9a7f36f98a51
-      vsixFile: $(system.defaultworkingdirectory)\AngularLanguageService.2019\bin\Release\AngularLanguageService.2019.vsix
-      manifestFile: $(system.defaultworkingdirectory)\AngularLanguageService.2019\manifest.json
-      publisherId: TypeScriptTeam
+        - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-vs-extension-build-task.PublishVisualStudioExtension@3
+          displayName: Publish VS 2019 Extension
+          condition: ${{parameters.Publish2019VsixToMarketplace}}
+          inputs:
+            connectedServiceName: 0c27eb7e-9441-49b0-ade7-9a7f36f98a51
+            vsixFile: $(system.defaultworkingdirectory)\AngularLanguageService.2019\bin\Release\AngularLanguageService.2019.vsix
+            manifestFile: $(system.defaultworkingdirectory)\AngularLanguageService.2019\manifest.json
+            publisherId: TypeScriptTeam
 
-  - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-vs-extension-build-task.PublishVisualStudioExtension@3
-    displayName: Publish VS 2022 Extension
-    # condition: and(succeeded(), eq(variables['Publish2022VsixToMarketplace'], 'true'))
-    condition: ${{parameters.Publish2022VsixToMarketplace}}
-    inputs:
-      connectedServiceName: 0c27eb7e-9441-49b0-ade7-9a7f36f98a51
-      vsixFile: $(system.defaultworkingdirectory)\AngularLanguageService.2022\bin\Release\AngularLanguageService.2022.vsix
-      manifestFile: $(system.defaultworkingdirectory)\AngularLanguageService.2022\manifest.json
-      publisherId: TypeScriptTeam
+        - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-vs-extension-build-task.PublishVisualStudioExtension@3
+          displayName: Publish VS 2022 Extension
+          condition: ${{parameters.Publish2022VsixToMarketplace}}
+          inputs:
+            connectedServiceName: 0c27eb7e-9441-49b0-ade7-9a7f36f98a51
+            vsixFile: $(system.defaultworkingdirectory)\AngularLanguageService.2022\bin\Release\AngularLanguageService.2022.vsix
+            manifestFile: $(system.defaultworkingdirectory)\AngularLanguageService.2022\manifest.json
+            publisherId: TypeScriptTeam
 
-  - task: ms-vseng.MicroBuildTasks.521a94ea-9e68-468a-8167-6dcf361ea776.MicroBuildCleanup@1
-    displayName: Send Telemetry
+        - task: ms-vseng.MicroBuildTasks.521a94ea-9e68-468a-8167-6dcf361ea776.MicroBuildCleanup@1
+          displayName: Send Telemetry
+
+        - task: DeleteFiles@1
+          displayName: Remove MicroBuild from artifact's folder
+          inputs:
+            SourceFolder: $(Build.ArtifactStagingDirectory)/MicroBuild
+            Contents: '*'
+            RemoveSourceFolder: true
