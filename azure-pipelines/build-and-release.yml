@@ -113,20 +113,20 @@ extends:
             Contents: '**\bin\$(BuildConfiguration)\**'
             TargetFolder: $(build.artifactstagingdirectory)
 
-        - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-vs-extension-build-task.PublishVisualStudioExtension@3
+        - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-vs-extension-build-task.PublishVisualStudioExtension@5
           displayName: Publish VS 2019 Extension
           condition: ${{parameters.Publish2019VsixToMarketplace}}
           inputs:
-            connectedServiceName: 0c27eb7e-9441-49b0-ade7-9a7f36f98a51
+            connectedServiceNameAzureRM: 'TypeScript-VSMarketplacePublishAuth'
             vsixFile: $(system.defaultworkingdirectory)\AngularLanguageService.2019\bin\Release\AngularLanguageService.2019.vsix
             manifestFile: $(system.defaultworkingdirectory)\AngularLanguageService.2019\manifest.json
             publisherId: TypeScriptTeam
 
-        - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-vs-extension-build-task.PublishVisualStudioExtension@3
+        - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-vs-extension-build-task.PublishVisualStudioExtension@5
           displayName: Publish VS 2022 Extension
           condition: ${{parameters.Publish2022VsixToMarketplace}}
           inputs:
-            connectedServiceName: 0c27eb7e-9441-49b0-ade7-9a7f36f98a51
+            connectedServiceNameAzureRM: 'TypeScript-VSMarketplacePublishAuth'
             vsixFile: $(system.defaultworkingdirectory)\AngularLanguageService.2022\bin\Release\AngularLanguageService.2022.vsix
             manifestFile: $(system.defaultworkingdirectory)\AngularLanguageService.2022\manifest.json
             publisherId: TypeScriptTeam
