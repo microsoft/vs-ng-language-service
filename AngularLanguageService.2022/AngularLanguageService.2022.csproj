@@ -73,11 +73,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <!-- LSP dependencies -->
-    <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="17.0.5158" />
+    <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="17.13.33" />
     <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Protocol" Version="17.0.5133" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.63" />
     <!-- For accessing WebTools' type definitions -->
-    <PackageReference Include="Microsoft.WebTools.Languages.Html.Editor" Version="17.0.633" />
+    <PackageReference Include="Microsoft.WebTools.Languages.Html.Editor" Version="17.6.339" />
     <!-- Some dependencies indirectly depend on older versions of Newtonsoft.Json so we explicitly set it here. -->
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
