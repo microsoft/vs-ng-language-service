@@ -80,6 +80,7 @@
     <PackageReference Include="Microsoft.WebTools.Languages.Html.Editor" Version="17.0.633" />
     <!-- Some dependencies indirectly depend on older versions of Newtonsoft.Json so we explicitly set it here. -->
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="MessagePack" Version="2.5.187" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.3.2088">
