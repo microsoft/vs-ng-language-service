@@ -14,5 +14,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\AngularConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\LanguageClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\MiddleLayerHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LanguageServer\WebToolsCompat.cs" />
   </ItemGroup>
 </Project>

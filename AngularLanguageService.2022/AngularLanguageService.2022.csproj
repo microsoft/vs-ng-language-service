@@ -76,8 +76,10 @@
     <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client" Version="17.0.5158" />
     <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Protocol" Version="17.0.5133" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.63" />
-    <!-- For accessing WebTools' type definitions -->
-    <PackageReference Include="Microsoft.WebTools.Languages.Html.Editor" Version="17.0.633" />
+    <!-- WebTools types (IFilePathToContentTypeProvider, HtmlContentTypeDefinition) are defined
+         inline in AngularLanguageService.Shared\LanguageServer\WebToolsCompat.cs to avoid
+         the Microsoft.WebTools.Languages.Html.Editor NuGet dependency which is not available
+         on the DevDiv_PublicPackages feed. -->
     <!-- Some dependencies indirectly depend on older versions of Newtonsoft.Json so we explicitly set it here. -->
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="MessagePack" Version="2.5.187" />
