@@ -1,0 +1,45 @@
+{
+  "properties": {
+    "helpUri": "https://eng.ms/docs/microsoft-security/security/azure-security/cloudai-security-fundamentals-engineering/security-integration/guardian-wiki/microsoft-guardian/general/baselines"
+  },
+  "version": "1.0.0",
+  "baselines": {
+    "default": {
+      "name": "default",
+      "createdDate": "2025-07-25 21:39:10Z",
+      "lastUpdatedDate": "2025-07-25 21:39:10Z"
+    }
+  },
+  "results": {
+    "6230ae65a1d058e176f63c2feff0d1d79d5b838d688d5700ce9cf0d9c94b6766": {
+      "signature": "6230ae65a1d058e176f63c2feff0d1d79d5b838d688d5700ce9cf0d9c94b6766",
+      "alternativeSignatures": [
+        "f9f09e05bf25eae2ab22e0bbd7470d70188f10e4fb2fed9c42efa682fbd08df4"
+      ],
+      "target": "AngularLanguageService.2019/bin/Release/Microsoft.VisualStudio.Designer.Interfaces.dll",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2009",
+      "createdDate": "2025-07-25 21:39:10Z",
+      "expirationDate": "2026-01-11 21:41:10Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2025-07-25 21:41:10Z"
+    },
+    "e9f2e73a67667b992a60256af2a5f1d6e883329d1692bbbdb8c3027a38f7d5b8": {
+      "signature": "e9f2e73a67667b992a60256af2a5f1d6e883329d1692bbbdb8c3027a38f7d5b8",
+      "alternativeSignatures": [
+        "f937169e5d2768a8ab9797b211bd8a7a87792f20f64266f0991df2690a493bda"
+      ],
+      "target": "AngularLanguageService.2019/bin/Release/Microsoft.VisualStudio.Designer.Interfaces.dll",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2016",
+      "createdDate": "2025-07-25 21:39:10Z",
+      "expirationDate": "2026-01-11 21:41:10Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2025-07-25 21:41:10Z"
+    }
+  }
+}
